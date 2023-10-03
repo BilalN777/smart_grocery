@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_grocery/pages/login_page.dart';
 
 void main() {
-  runApp(const LoginApp());
+  runApp(const MyApp());
 }
 
 // class MyApp extends StatelessWidget {

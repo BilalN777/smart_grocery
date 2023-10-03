@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'home_page.dart';
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.only(left : 50.0 , right: 50) ,
+                  padding: const EdgeInsets.only(left : 30.0 , right: 30) ,
                   child: ListView(
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -219,6 +219,21 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                         decoration: const InputDecoration(labelText: 'Dietary restrictions and allergies.'),
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            _username = value;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter food preferences.';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(labelText: 'Food Preferences.'),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(

@@ -8,6 +8,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currentPageIndex = 0 ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +16,11 @@ class _HomePageState extends State<HomePage> {
         // leading: null,
         title: const Text('Smart Grocery'),
       ),
-      body: const Center(child: Text('Login Successful!')),
+      body:  <Widget>[
+        pageOne(),
+        pageTwo(),
+        pageThree(),
+      ][currentPageIndex],
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -64,12 +69,54 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        destinations: const [
-          
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index){
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.school),
+            icon: Icon(Icons.school_outlined),
+            label: 'School',
+          ),
         ],
-
       ),
     );
+  }
+
+  Container pageThree() {
+    return Container(
+        color: Colors.blue,
+        alignment: Alignment.center,
+        child: const Text('Page 3'),
+      );
+  }
+
+  Container pageTwo() {
+    return Container(
+        color: Colors.green,
+        alignment: Alignment.center,
+        child: const Text('Page 2'),
+      );
+  }
+
+  Container pageOne() {
+    return Container(
+        color: Colors.red,
+        alignment: Alignment.center,
+        child: const Text('Page 1'),
+      );
   }
 }
 
