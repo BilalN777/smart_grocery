@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'home_page.dart';
 
-// void main() => runApp(LoginApp());
-
 class LoginApp extends StatelessWidget {
   const LoginApp({super.key});
 
@@ -13,9 +11,9 @@ class LoginApp extends StatelessWidget {
     return MaterialApp(
       title: 'Login Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
@@ -39,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         print('Username: $_username, Password: $_password');
       }
       // For demonstration purposes, navigate to a new screen on submit
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
     }
   }
 
@@ -50,19 +48,19 @@ class _LoginPageState extends State<LoginPage> {
         print('Username: $_username, \nPassword: $_password');
       }
       // For demonstration purposes, navigate to a new screen on submit
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
     }
   }
 
   void _guestLogin() {
-    if (_formKey.currentState!.validate()) {
+    // if (_formKey.currentState!.validate()) {
       // Handle login logic here
       if (kDebugMode) {
         print('Username: $_username, Password: $_password');
       }
       // For demonstration purposes, navigate to a new screen on submit
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
-    }
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+    // }
   }
   @override
   Widget build(BuildContext context) {
@@ -70,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
+        // resizeToAvoidBottomInset : false,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Smart Grocery'),
@@ -105,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(labelText: 'Username'),
+                        decoration: const InputDecoration(labelText: 'Username'),
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -120,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(labelText: 'Password'),
+                        decoration: const InputDecoration(labelText: 'Password'),
                         obscureText: true,
                       ),
                       const SizedBox(height: 16),
@@ -143,8 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                 key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.only(left : 50.0 , right: 50) ,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: ListView(
+                    // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormField(
                         onChanged: (value) {
@@ -219,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(labelText: 'Dietary restrictions and allergies.'),
+                        decoration: const InputDecoration(labelText: 'Dietary restrictions and allergies.'),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
@@ -240,17 +239,5 @@ class _LoginPageState extends State<LoginPage> {
 
 }
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
 
-  @override
-  State<SignupPage> createState() => _SignupPageState();
-}
-
-class _SignupPageState extends State<SignupPage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
