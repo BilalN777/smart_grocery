@@ -19,6 +19,30 @@ class RegularUser extends User{
     name = 'Guest_$id';
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'location': location,
+      'foodPreferences': _foodPreferences.join(','),
+      'paymentInfo': _paymentInfo
+    };
+  }
+
+
+  static RegularUser fromMap(Map<String, dynamic> map) {
+    return RegularUser(
+        map['name'],
+        map['email'],
+        map['location'],
+        (map['foodPreferences'] as String).split(',')
+    )..id = map['id']
+      ..phone = map['phoneNumber']
+      .._paymentInfo = map['paymentInfo'];
+  }
+
+
   Recipe selectRecipe () {
     return Recipe.empty() ;
   }
