@@ -209,7 +209,7 @@ class DatabaseHelper {
 
   Future<void> loadUsersFromCSV() async {
     // Load CSV from assets
-    String csvData = await rootBundle.loadString('assets/users.csv');
+    String csvData = await rootBundle.loadString('assets/data/users.csv');
 
     List<List<dynamic>> csvList = CsvToListConverter().convert(csvData);
 
@@ -232,19 +232,19 @@ class DatabaseHelper {
   // Load the ingredients
   Future<void> loadIngredientsFromJSON() async {
     // Load JSON from assets
-    String jsonData = await rootBundle.loadString('assets/Sorted_Ingredients.json');
+    String jsonData = await rootBundle.loadString('assets/data/Sorted_Ingredients.json');
 
     List<dynamic> ingredientList = json.decode(jsonData);
 
     for (var ingredient in ingredientList) {
-      await insertIngredient(ingredient['ingredient']);
+      await insertIngredient(ingredient);
     }
   }
 
   // Load the recipes
   Future<void> loadRecipesFromJSON() async {
     // Load JSON from assets
-    String jsonData = await rootBundle.loadString('assets/Merged_Recipes.json');
+    String jsonData = await rootBundle.loadString('assets/data/Merged_Recipes.json');
 
     List<dynamic> recipeList = json.decode(jsonData);
 
