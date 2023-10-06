@@ -3,6 +3,16 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:csv/csv.dart';
+import 'dart:convert';
+
+
+
+/*Setup DB by calling in the instantiation class
+* DatabaseHelper dbHelper = DatabaseHelper.instance;
+* await dbHelper.loadUsersFromCSV();
+* await dbHelper.loadIngredientsFromJSON();
+* await dbHelper.loadRecipesFromJSON();*/
 
 class DatabaseHelper {
 
@@ -197,10 +207,59 @@ class DatabaseHelper {
       return await db.delete(_itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
     }
 
+  Future<void> loadUsersFromCSV() async {
+    // Load CSV from assets
+    String csvData = await rootBundle.loadString('assets/users.csv');
 
+    List<List<dynamic>> csvList = CsvToListConverter().convert(csvData);
 
+    // Skip the first row if it's a header
+    for (int i = 1; i < csvList.length; i++) {
+      Map<String, dynamic> user = {
+        columnUserId: csvList[i][0],
+        columnName: csvList[i][1],
+        columnEmail: csvList[i][2],
+        columnPhoneNumber: csvList[i][3],
+        columnUserName: csvList[i][4],
+        columnLocation: csvList[i][5],
+        columnPaymentInfo: csvList[i][6],
+        columnFoodPreferences: csvList[i][7]
+      };
 
-
-
-
+      await insertUser(user);
+    }
   }
+  // Load the ingredients
+  Future<void> loadIngredientsFromJSON() async {
+    // Load JSON from assets
+    String jsonData = await rootBundle.loadString('assets/Sorted_Ingredients.json');
+
+    List<dynamic> ingredientList = json.decode(jsonData);
+
+    for (var ingredient in ingredientList) {
+      await insertIngredient(ingredient['ingredient']);
+    }
+  }
+
+  // Load the recipes
+  Future<void> loadRecipesFromJSON() async {
+    // Load JSON from assets
+    String jsonData = await rootBundle.loadString('assets/Merged_Recipes.json');
+
+    List<dynamic> recipeList = json.decode(jsonData);
+
+    for (var recipe in recipeList) {
+      Map<String, dynamic> recipeMap = {
+        columnRecipeId: recipe['recipe_id'],
+        columnRecipeTitle: recipe['Recipe_title'],
+        columnInstructions: recipe['instructions'],
+        columnIngredients: json.encode(recipe['ingredients']) // Convert list to string
+      };
+      await insertRecipe(recipeMap);
+    }
+  }
+
+
+
+
+}
