@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  csv: any
+  csv: ^5.0.2
   sqflite: any
   path_provider: any
 
@@ -77,6 +77,7 @@ flutter:
     - assets/data/recipe_ingredients.json
     - assets/data/recipe_instructions.json
     - assets/data/users.csv
+    - assets/data/consolidated_data.csv
     - assets/data/Sorted_Ingredients.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

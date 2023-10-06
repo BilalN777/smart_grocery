@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Demo',
+      title: 'Smart Grocery',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
@@ -53,14 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _guestLogin() {
-    // if (_formKey.currentState!.validate()) {
-      // Handle login logic here
-      if (kDebugMode) {
-        print('Username: $_username, Password: $_password');
-      }
-      // For demonstration purposes, navigate to a new screen on submit
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
-    // }
   }
   @override
   Widget build(BuildContext context) {

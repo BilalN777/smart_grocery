@@ -37,7 +37,7 @@ class RegularUser extends User{
         map['email'],
         map['location'],
         map['foodPreferences']
-    )..id = map['id']
+    ) ..id = map['id']
       ..phone = map['phoneNumber']
       .._paymentInfo = map['paymentInfo'];
   }

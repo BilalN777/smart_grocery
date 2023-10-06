@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/databaseHelper.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
+import 'package:smart_grocery/recipe_builder.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
+
+  late Future<List<Map<String, dynamic>>> listOfRecipies ;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,53 +123,56 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container pageOne() {
-    String searchKey = "page1" ;
-    return Container(
-      color: Colors.red[200],
-      alignment: Alignment.center,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
-              return SearchBar(
-                controller: controller,
-                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0)),
-                onTap: () {
-                  // controller.openView();
-
-                },
-                onChanged: (String s) {
-                  // controller.openView();
-                  setState(() {
-
-                  });
-                },
-                leading: const Icon(Icons.search),
-              );
-            }, suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-              return List<ListTile>.generate(5, (int index) {
-                final String item = 'item $index';
-                return ListTile(
-                  title: Text(item),
-                  onTap: () {
-                    setState(() {
-                      controller.closeView(item);
-                    });
-                  },
-                );
-              });
-            }),
-          ),
-           Text(searchKey),
-        ],
-      ),
-    );
-  }
+  // Container pageOne(GetRecipes GR) {
+  //   String searchKey = "page1" ;
+  //   return Container(
+  //     color: Colors.red[200],
+  //     alignment: Alignment.center,
+  //     child: Column(
+  //       children: [
+  //         Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: SearchAnchor(
+  //               builder: (BuildContext context, SearchController controller) {
+  //             return SearchBar(
+  //               controller: controller,
+  //               padding: const MaterialStatePropertyAll<EdgeInsets>(
+  //                   EdgeInsets.symmetric(horizontal: 16.0)),
+  //               onTap: () {
+  //                 // controller.openView();
+  //
+  //               },
+  //               onChanged: (String s) {
+  //                 // controller.openView();
+  //                 setState(() {
+  //
+  //                 });
+  //               },
+  //               leading: const Icon(Icons.search),
+  //             );
+  //           }, suggestionsBuilder:
+  //                   (BuildContext context, SearchController controller) {
+  //             return List<ListTile>.generate(5, (int index) {
+  //               final String item = 'item $index';
+  //               return ListTile(
+  //                 title: Text(item),
+  //                 onTap: () {
+  //                   setState(() {
+  //                     controller.closeView(item);
+  //                   });
+  //                 },
+  //               );
+  //             });
+  //           }),
+  //         ),
+  //          Text(searchKey),
+  //        ListView(
+  //          children: GR.getListTiles(),
+  //        )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Container pageFour() {
     return Container(
