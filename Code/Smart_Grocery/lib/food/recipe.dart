@@ -1,6 +1,8 @@
 import 'item.dart';
 
 class Recipe {
+  late final int? _recipeId;
+  late final String? _title;
   late final List<Item>? _ingredients ;
   late final int? _timeToCook ;
   late final String? _instructions ;
@@ -8,9 +10,11 @@ class Recipe {
   Recipe(this._ingredients, this._timeToCook,this._instructions);
 
   Recipe.empty() {
-    _ingredients = [] ;
-    _timeToCook = 0 ;
-    _instructions = '' ;
+    _recipeId = null;
+    _title = '';
+    _ingredients = [];
+    _timeToCook = 0;
+    _instructions = '';
   }
 
   List<Item>? get ingredients => _ingredients;

@@ -1,7 +1,11 @@
 class Item {
+
+  late final int? _ingredient_id;
+  late final String? _name;
+
   late final int? _cost ;
   late int? totalAvail ;
-  late final bool? _onSale ;
+  late final bool? _onSale;
 
   Item (this._cost, this._onSale) ;
 

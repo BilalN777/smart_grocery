@@ -3,10 +3,10 @@ import 'package:smart_grocery/user/user.dart';
 
 class RegularUser extends User{
   late String location ;
-  int? _paymentInfo ;
-  late List<String> _foodPreferences ;
+  late String _paymentInfo ;
+  late String _foodPreferences ;
 
-  RegularUser(String name , String email, this.location ,  List<String> foodPreferences) {
+  RegularUser(String name , String email, this.location ,  String foodPreferences) {
     newUser() ;
     this.name = name ;
     this.email = email ;
@@ -25,7 +25,7 @@ class RegularUser extends User{
       'name': name,
       'email': email,
       'location': location,
-      'foodPreferences': _foodPreferences.join(','),
+      'foodPreferences': _foodPreferences,
       'paymentInfo': _paymentInfo
     };
   }
@@ -36,24 +36,21 @@ class RegularUser extends User{
         map['name'],
         map['email'],
         map['location'],
-        (map['foodPreferences'] as String).split(',')
+        map['foodPreferences']
     )..id = map['id']
       ..phone = map['phoneNumber']
       .._paymentInfo = map['paymentInfo'];
   }
 
-
   Recipe selectRecipe () {
     return Recipe.empty() ;
   }
-
   void postRecipe () {
     return;
   }
-
   List<String> completePurchase () {
     return <String>[] ;
   }
 
-  int? get paymentInfo => _paymentInfo;
+  String? get paymentInfo => _paymentInfo;
 }
