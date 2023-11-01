@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.deepPurple,
               ),
               child: Text(
-                'Drawer Header',
+                'Smart Grocery',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
