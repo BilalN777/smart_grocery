@@ -172,6 +172,7 @@ class DatabaseHelper {
   }
 
 
+  // the updated version of inserting a recipe
   Future<int> insertRecipe_2(Recipe recipe) async{
     Database db = await instance.database;
     return await db.insert(recipeTable, recipe.toMap());
