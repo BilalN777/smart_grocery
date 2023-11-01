@@ -24,3 +24,8 @@ samples, guidance on mobile development, and a full API reference.
 - ✅ pantry tab
 - recommended Home page 
 - search bar
+- for the database
+  - recipe crud operations
+  - ingredient crud operations
+  - test database pulling
+  - focus on just being able to add
