@@ -13,3 +13,4 @@ class Item {
 
   bool? get onSale => _onSale;
 }
+
