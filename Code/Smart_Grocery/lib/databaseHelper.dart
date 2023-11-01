@@ -206,41 +206,41 @@ class DatabaseHelper {
 
   // INGREDIENT CRUD operations
 
-  // Create: insert a new ingredient into the DB
-    Future<int> insertIngredient(String ingredientName) async {
-      Database db = await instance.database;
-      return await db.insert(itemTable, {columnIngredientName: ingredientName});
-    }
-
-  // Read: fetch all ingredients from the DB
-    Future<List<Map<String, dynamic>>> queryAllIngredients() async {
-      Database db = await instance.database;
-      return await db.query(itemTable);
-    }
-
-  // Read: fetch a specific ingredient by its ID
-    Future<Map<String, dynamic>> queryIngredientById(int id) async {
-      Database db = await instance.database;
-      var result = await db.query(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
-      return result.first;
-    }
-
-  // Update: modify an existing ingredient in the DB by its ID
-    Future<int> updateIngredient(int id, String newIngredientName) async {
-      Database db = await instance.database;
-      return await db.update(
-          itemTable,
-          {columnIngredientName: newIngredientName},
-          where: '$columnIngredientId = ?',
-          whereArgs: [id]
-      );
-    }
-
-  // Delete: remove an ingredient from the DB by its ID
-    Future<int> deleteIngredient(int id) async {
-      Database db = await instance.database;
-      return await db.delete(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
-    }
+  // // Create: insert a new ingredient into the DB
+  //   Future<int> insertIngredient(String ingredientName) async {
+  //     Database db = await instance.database;
+  //     return await db.insert(itemTable, {columnIngredientName: ingredientName});
+  //   }
+  //
+  // // Read: fetch all ingredients from the DB
+  //   Future<List<Map<String, dynamic>>> queryAllIngredients() async {
+  //     Database db = await instance.database;
+  //     return await db.query(itemTable);
+  //   }
+  //
+  // // Read: fetch a specific ingredient by its ID
+  //   Future<Map<String, dynamic>> queryIngredientById(int id) async {
+  //     Database db = await instance.database;
+  //     var result = await db.query(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
+  //     return result.first;
+  //   }
+  //
+  // // Update: modify an existing ingredient in the DB by its ID
+  //   Future<int> updateIngredient(int id, String newIngredientName) async {
+  //     Database db = await instance.database;
+  //     return await db.update(
+  //         itemTable,
+  //         {columnIngredientName: newIngredientName},
+  //         where: '$columnIngredientId = ?',
+  //         whereArgs: [id]
+  //     );
+  //   }
+  //
+  // // Delete: remove an ingredient from the DB by its ID
+  //   Future<int> deleteIngredient(int id) async {
+  //     Database db = await instance.database;
+  //     return await db.delete(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
+  //   }
 
   // Future<void> loadUsersFromCSV() async {
   //   // Load CSV from assets
@@ -265,17 +265,17 @@ class DatabaseHelper {
   //   }
   // }
 
-  // Load the ingredients
-  Future<void> loadIngredientsFromJSON() async {
-    // Load JSON from assets
-    String jsonData = await rootBundle.loadString('assets/data/Sorted_Ingredients.json');
-
-    List<dynamic> ingredientList = json.decode(jsonData);
-
-    for (var ingredient in ingredientList) {
-      await insertIngredient(ingredient);
-    }
-  }
+  // // Load the ingredients
+  // Future<void> loadIngredientsFromJSON() async {
+  //   // Load JSON from assets
+  //   String jsonData = await rootBundle.loadString('assets/data/Sorted_Ingredients.json');
+  //
+  //   List<dynamic> ingredientList = json.decode(jsonData);
+  //
+  //   for (var ingredient in ingredientList) {
+  //     await insertIngredient(ingredient);
+  //   }
+  // }
 
   // Load the recipes
   Future<void> loadRecipesFromJSON() async {

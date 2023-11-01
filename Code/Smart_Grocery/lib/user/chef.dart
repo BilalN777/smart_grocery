@@ -13,9 +13,9 @@ class Chef extends User{
     id = userCount ;
   }
 
-  Recipe recordRecipe () {
-    return Recipe.empty() ;
-  }
+  // Recipe recordRecipe () {
+  //   return Recipe.empty() ;
+  // }
 
   void postVideo () {
     return;

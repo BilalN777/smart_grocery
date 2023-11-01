@@ -42,9 +42,9 @@ class RegularUser extends User{
       .._paymentInfo = map['paymentInfo'];
   }
 
-  Recipe selectRecipe () {
-    return Recipe.empty() ;
-  }
+  // Recipe selectRecipe () {
+  //   return Recipe.empty() ;
+  // }
   void postRecipe () {
     return;
   }
