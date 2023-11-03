@@ -1,17 +1,17 @@
 class Store {
   String? name;
   String? address;
-  int? zipcode;
+  String? zipcode;
   String? location;
   int? id;
 
   // string has to match json
   Map<String, dynamic> toMap() {
     return {
-      'Store name': name,
+      'store_name': name,
       'Address': address,
       'Zip': zipcode,
-      'Location': location,
+      'Location' : location,
       'store_id': id,
     };
   }
@@ -27,12 +27,16 @@ class Store {
 
   factory Store.fromMap(Map<String, dynamic> map) {
     return Store(
-      name: map['Store Name'],
+      name: map['store_name'],
       address: map['Address'],
       zipcode: map['Zip'],
       location: map['Location'],
       id: map['store_id'],
     );
+  }
+
+  String toString() {
+    return 'Store{Name: $name, address: $address, zipcode: $zipcode, location: $location, id: $id}\n';
   }
 
 

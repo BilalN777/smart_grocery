@@ -1,8 +1,8 @@
 class Ingredient{
 
   String? name;
-  String? ingredient_id;
-  int? cost;
+  int? ingredient_id;
+  double? cost;
   double? qty_available;
 
 
@@ -32,4 +32,7 @@ class Ingredient{
     );
   }
 
+  String toString() {
+    return 'Ingredient{name: $name, ingredient_id: $ingredient_id, cost: $cost, qty_available: $qty_available}\n';
+  }
 }

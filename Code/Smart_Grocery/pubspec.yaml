@@ -74,12 +74,12 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/data/Merged_Recipes.json
-    - assets/data/recipe_ingredients.json
+    - assets/data/Grocery_Stores.json
+    - assets/data/ingredients.json
+    - assets/data/ingredients_with_costs_and_zero_inventory.json
     - assets/data/recipe_instructions.json
+    - assets/data/recipes.json
     - assets/data/users.csv
-    - assets/data/consolidated_data.csv
-    - assets/data/Sorted_Ingredients.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
