@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_grocery/models/store_tile.dart';
 import 'package:smart_grocery/store/store.dart';
 import 'package:smart_grocery/databaseHelper.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StorePage extends StatefulWidget {
 

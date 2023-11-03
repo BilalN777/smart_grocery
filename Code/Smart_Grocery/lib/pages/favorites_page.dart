@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:google_fonts/google_fonts.dart';
+=======
 import 'package:smart_grocery/databaseHelper.dart';
 import 'package:smart_grocery/food/recipe.dart';
 import 'package:smart_grocery/models/recipe_tile.dart';
 import 'package:smart_grocery/pages/recipe_details_page.dart';
+>>>>>>> refs/remotes/origin/master
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
