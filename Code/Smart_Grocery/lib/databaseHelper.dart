@@ -13,17 +13,6 @@ import 'package:smart_grocery/food/recipe.dart';
 import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/store/store.dart';
 
-// import 'package:Smart_Grocery/lib/food/recipe.dart';
-
-
-
-
-/*Setup DB by calling in the instantiation class
-* DatabaseHelper dbHelper = DatabaseHelper.instance;
-* await dbHelper.loadUsersFromCSV();
-* await dbHelper.loadIngredientsFromJSON();
-* await dbHelper.loadRecipesFromJSON();*/
-
 class DatabaseHelper {
 
   // setup of the database
@@ -122,46 +111,62 @@ class DatabaseHelper {
             )
             ''');
 
-    String recipesJsonString = await rootBundle.loadString('assets/data/recipes.json');
-    // print(recipesJsonString);
-    List<dynamic> recipes = json.decode(recipesJsonString);
-    // Insert recipes into the database
-    for (var recipe in recipes) {
-      await db.insert(recipeTable, {
-        columnRecipeTitle: recipe['Recipe_title'],
-        columnInstructions: json.encode(recipe['instructions']), // Assuming it's a JSON array or object
-        columnIngredients: json.encode(recipe['ingredients']), // Assuming it's a JSON array or object
-        columnRecipeId: recipe['recipe_id'],
-      });
+
+    bool recipesPopulated = await _isTablePopulated(db, recipeTable);
+    bool ingredientsPopulated = await _isTablePopulated(db, ingredientsTable);
+    bool storesPopulated = await _isTablePopulated(db, groceryStoresTable);
+
+    if(!recipesPopulated) {
+      String recipesJsonString = await rootBundle.loadString(
+          'assets/data/recipes.json');
+      // print(recipesJsonString);
+      List<dynamic> recipes = json.decode(recipesJsonString);
+      // Insert recipes into the database
+      for (var recipe in recipes) {
+        await db.insert(recipeTable, {
+          columnRecipeTitle: recipe['Recipe_title'],
+          columnInstructions: json.encode(recipe['instructions']),
+          // Assuming it's a JSON array or object
+          columnIngredients: json.encode(recipe['ingredients']),
+          // Assuming it's a JSON array or object
+          columnRecipeId: recipe['recipe_id'],
+        });
+      }
     }
 
-    String ingredientsJsonString = await rootBundle.loadString('assets/data/ingredients_with_costs_and_zero_inventory.json');
-    // print(ingredientsJsonString);
+    if(!ingredientsPopulated) {
+      String ingredientsJsonString = await rootBundle.loadString(
+          'assets/data/ingredients_with_costs_and_zero_inventory.json');
+      // print(ingredientsJsonString);
 
-    List<dynamic> ingredients = json.decode(ingredientsJsonString);
+      List<dynamic> ingredients = json.decode(ingredientsJsonString);
 
-    for(var ing in ingredients){
-      await db.insert(ingredientsTable, {
-        columnIngredientName: ing['name'],
-        columnIngredientId: ing['ingredient_id'],
-        columnIngredientCost: ing['cost'],
-        columnIngredientQty: ing['inventory_qty'],
+      for (var ing in ingredients) {
+        await db.insert(ingredientsTable, {
+          columnIngredientName: ing['name'],
+          columnIngredientId: ing['ingredient_id'],
+          columnIngredientCost: ing['cost'],
+          columnIngredientQty: ing['inventory_qty'],
 
-      });
+        });
+      }
     }
 
-    String groceryStoresJsonString = await rootBundle.loadString('assets/data/Grocery_Stores.json');
-    // print(groceryStoresJsonString);
-    List<dynamic> stores = json.decode(groceryStoresJsonString);
+    if(!storesPopulated) {
+      String groceryStoresJsonString = await rootBundle.loadString(
+          'assets/data/Grocery_Stores.json');
+      // print(groceryStoresJsonString);
+      List<dynamic> stores = json.decode(groceryStoresJsonString);
 
-    for(var store in stores){
-      await db.insert(groceryStoresTable, {
-        columnStoreName: store['store_name'],
-        columnStoreAddress: store['Address'],
-        columnStoreZip: store['Zip'],
-        columnStoreLocation: store['Location'],
-        columnStoreId: store['store_id'],
-      });
+      for (var store in stores) {
+        await db.insert(groceryStoresTable, {
+          columnStoreName: store['store_name'],
+          columnStoreAddress: store['Address'],
+          columnStoreZip: store['Zip'],
+          columnStoreLocation: store['Location'],
+          columnStoreId: store['store_id'],
+        });
+      }
     }
 
   }
@@ -265,6 +270,9 @@ class DatabaseHelper {
   }
 
 
-
+  Future<bool> _isTablePopulated(Database db, String tableName) async {
+    final data = await db.query(tableName, limit: 1);
+    return data.isNotEmpty;
+  }
 
 }
