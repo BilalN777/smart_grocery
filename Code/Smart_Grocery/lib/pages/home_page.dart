@@ -44,14 +44,6 @@ class _HomePageState extends State<HomePage> {
         // leading: null,
         backgroundColor: Colors.deepPurple,
         title: const Text('Smart Grocery'),
-        actions: [
-          if (currentPageIndex == 0)
-            IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: MySearchDelegate());
-                },
-                icon: Icon(Icons.search))
-        ],
       ),
       body: <Widget>[
         WidgetRecipePage,
@@ -100,10 +92,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.logout),
               title: const Text('Exit'),
               onTap: () {
-                // exit(0);
                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                // SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                // Navigator.pop(context);
               },
             ),
           ],
@@ -122,8 +111,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Recipes',
           ),
           NavigationDestination(
-            icon: Icon(Icons.history),
-            label: 'History',
+            icon: Icon(Icons.store_mall_directory),
+            label: 'Stores',
           ),
           NavigationDestination(
             icon: Icon(Icons.add_circle_outline),

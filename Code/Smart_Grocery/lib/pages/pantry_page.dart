@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/models/ingredients_tile.dart';
 
 class PantryPage extends StatefulWidget {
   const PantryPage({super.key});
@@ -25,6 +26,10 @@ class _PantryPageState extends State<PantryPage> {
   void dispose() {
     tController.dispose();
     super.dispose();
+  }
+
+  void deleteIngredentFromPantry () {
+    
   }
 
 
@@ -65,16 +70,15 @@ class _PantryPageState extends State<PantryPage> {
     ListView myList = ListView.builder(
       itemCount: userPantry.length,
       itemBuilder: (context, index) {
-        final ingredient = userPantry[index];
-        return ListTile(
-          title: Text(ingredient),
-          trailing: IconButton(onPressed: () {
-            setState(() {
-              userPantry.removeAt(index);
-              // PantryPage = BuildPantryPage();
-            });
-          }, icon: Icon(Icons.delete)),
-        ); // ListTile
+        // final ingredient = userPantry[index];
+        // todo: code to check if the count is not 1 for data base
+        return IngredientTile(
+          name: userPantry[index], 
+          cost: 0.0, 
+          deleteIngrident: () => setState(() {
+            userPantry.removeAt(index); 
+          })
+        );
       },
     );
 
@@ -107,23 +111,31 @@ class _PantryPageState extends State<PantryPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)
+                ),
                 autofocus: true,
                 controller: tController,
                 onChanged: (text) {
                   newIngredient = text;
                 },
                 onSubmitted: (text) {
-                  setState(() {
-                    userPantry.add(newIngredient);
-                  });
-                  Navigator.pop(context);
+                  if (text.isNotEmpty){
+                    setState(() {
+                      userPantry.add(newIngredient);
+                    });
+                    tController.clear() ; 
+                    Navigator.pop(context);
+                  }
                 },
               ),
               SizedBox(height: 20,),
               ElevatedButton(onPressed: () {
-                setState(() {
-                  userPantry.add(newIngredient);
-                });
+                if (newIngredient.isNotEmpty)
+                  setState(() {
+                    userPantry.add(newIngredient);
+                  });
+                tController.clear(); 
                 Navigator.pop(context);
               }, child: Text("Add"))
             ],

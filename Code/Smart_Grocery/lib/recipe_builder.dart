@@ -2,6 +2,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_grocery/databaseHelper.dart';
+import 'package:smart_grocery/models/recipe_tile.dart';
 
 class GetRecipes {
   late DatabaseHelper dbHelper;

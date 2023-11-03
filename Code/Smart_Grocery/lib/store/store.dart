@@ -9,9 +9,9 @@ class Store {
   Map<String, dynamic> toMap() {
     return {
       'Store name': name,
-      'Address': address;
-      'Zip': zipcode;
-      'Location' location;
+      'Address': address,
+      'Zip': zipcode,
+      'Location': location,
       'store_id': id,
     };
   }
