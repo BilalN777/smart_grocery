@@ -11,14 +11,19 @@ class Recipe {
 
   int? recipe_id;
 
+  int isFavorite = 0;
+
   Map<String, dynamic> toMap() {
     return {
+
       'Recipe_title': Recipe_title,
       'instructions': instructions,
       // 'instructions': json.encode(instructions),
       'ingredients': ingredients,
       // 'ingredients': json.encode(ingredients),
-      'recipe_id': recipe_id
+      'recipe_id': recipe_id,
+      'isFavorite': isFavorite
+
     };
     }
 
@@ -29,6 +34,7 @@ class Recipe {
     required this.instructions,
     required this.ingredients,
     this.recipe_id,
+    this.isFavorite = 0
 
 });
 
@@ -49,12 +55,13 @@ class Recipe {
       instructions: List<String>.from(json.decode(map['instructions'])), // Decoding the JSON string to a List
       ingredients: List<String>.from(json.decode(map['ingredients'])), // Decoding the JSON string to a List
       recipe_id: map['recipe_id'],
+      isFavorite: map['isFavorite']
     );
   }
 
 
   String toString() {
-    return 'Recipe{Recipe_title: $Recipe_title, instructions: $instructions, ingredients: $ingredients, recipe_id: $recipe_id}\n';
+    return 'Recipe{Recipe_title: $Recipe_title, instructions: $instructions, ingredients: $ingredients, recipe_id: $recipe_id, Favorite: $isFavorite}\n';
   }
 
 }

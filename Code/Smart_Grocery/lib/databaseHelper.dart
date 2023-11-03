@@ -39,6 +39,7 @@ class DatabaseHelper {
   static final columnInstructions = 'instructions';
   static final columnIngredients = 'ingredients';
   static final columnRecipeId = 'recipe_id';
+  static final columnIsFavorite = 'isFavorite';
 
   // Ingredients
   static final ingredientsTable = 'ingredients';
@@ -89,7 +90,8 @@ class DatabaseHelper {
              $columnRecipeId INTEGER PRIMARY KEY,
              $columnRecipeTitle TEXT NOT NULL,
              $columnInstructions LONGTEXT,
-             $columnIngredients LONGTEXT NOT NULL
+             $columnIngredients LONGTEXT NOT NULL,
+             $columnIsFavorite INTEGER NOT NULL
            )
            ''');
     await db.execute('''
@@ -130,6 +132,7 @@ class DatabaseHelper {
           columnIngredients: json.encode(recipe['ingredients']),
           // Assuming it's a JSON array or object
           columnRecipeId: recipe['recipe_id'],
+          columnIsFavorite : recipe['isFavorite']
         });
       }
     }
@@ -201,6 +204,29 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.delete(recipeTable, where: '$columnRecipeId = ?', whereArgs: [id]);
   }
+
+  Future<void> toggleFavoriteStatus(int recipeId, int isFavorite) async {
+    final db = await instance.database;
+    // Here we assume isFavorite is already an integer with value 0 or 1.
+    await db.update(
+      recipeTable,
+      {'isFavorite': isFavorite},
+      where: 'recipe_id = ?',
+      whereArgs: [recipeId],
+    );
+  }
+
+  Future<List<Recipe>> getFavoriteRecipes() async {
+    final db = await instance.database;
+    final maps = await db.query(
+      recipeTable,
+      where: 'isFavorite = ?',
+      whereArgs: [1], // We look for recipes where is_favorite is 1
+    );
+    return maps.map((map) => Recipe.fromMap(map)).toList();
+  }
+
+
 
 
   // INGREDIENT OPERATIONS
