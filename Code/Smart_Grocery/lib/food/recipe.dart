@@ -55,7 +55,7 @@ class Recipe {
       instructions: List<String>.from(json.decode(map['instructions'])), // Decoding the JSON string to a List
       ingredients: List<String>.from(json.decode(map['ingredients'])), // Decoding the JSON string to a List
       recipe_id: map['recipe_id'],
-      isFavorite: map['isFavorite']
+      isFavorite: 0
     );
   }
 

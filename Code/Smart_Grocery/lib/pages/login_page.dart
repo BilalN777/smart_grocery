@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Grocery',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        // primarySwatch: Colors.deepPurple,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey),
+        
       ),
       home: const LoginPage(),
     );
