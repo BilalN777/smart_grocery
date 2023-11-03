@@ -205,6 +205,11 @@ class DatabaseHelper {
             )
             ''');
 
+  //   call json load for recipe json
+  //   data = jsonfile
+  //   populate table with data
+
+
   }
 
 
@@ -302,26 +307,11 @@ class DatabaseHelper {
 
 
   // Load the recipes
-  Future<void> loadRecipesFromJSON() async {
-    // Load JSON from assets
-    String jsonData = await rootBundle.loadString('assets/data/Merged_Recipes.json');
 
-    List<dynamic> recipeList = json.decode(jsonData);
-
-    for (var recipe in recipeList) {
-      Map<String, dynamic> recipeMap = {
-        columnRecipeId: recipe['recipe_id'],
-        columnRecipeTitle: recipe['Recipe_title'],
-        columnInstructions: recipe['instructions'],
-        columnIngredients: json.encode(recipe['ingredients']) // Convert list to string
-      };
-      await insertRecipe(recipeMap);
-    }
-  }
   List<dynamic> jsonData = [];
 
-  Future<List<dynamic>> loadJsonAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/data2.json');
+  Future<List<dynamic>> loadJsonAsset(String fileName) async {
+    String jsonString = await rootBundle.loadString(fileName);
     List<dynamic> data = jsonDecode(jsonString);
     return data;
   }
