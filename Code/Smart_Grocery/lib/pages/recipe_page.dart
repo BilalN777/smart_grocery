@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/databaseHelper.dart';
+import 'package:smart_grocery/food/recipe.dart';
 import 'package:smart_grocery/models/recipe_tile.dart';
 import 'package:smart_grocery/pages/recipe_details_page.dart';
-import 'package:smart_grocery/recipe_builder.dart';
+// import 'package:smart_grocery/recipe_builder.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({super.key});
@@ -12,17 +14,20 @@ class RecipePage extends StatefulWidget {
 
 class _RecipePageState extends State<RecipePage> {
   String searchRecipe = "" ;
-  late GetRecipes GR;
+
   late Future<List<Map<String, dynamic>>>  listOfRecipies;
 
-  // List recipeData = [
-  //   ['recipe name1', ['instructios1', 'instructions2'], ['ing 1' , 'ing 2'] ],
-  //   ['recipe name3', ['instructios1', 'instructions2'], ['ing 1' , 'ing 2'] ],
-  //   ['recipe name2', ['instructios1', 'instructions2'], ['ing 1' , 'ing 2'] ],
-  //   ['recipe name6', ['instructios1', 'instructions2'], ['ing 1' , 'ing 2'] ],
-  // ];
+  DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-  // List <Recipes> rd = getdatabase 
+  List <Recipe> recipes = [] ; 
+
+  Future<void> initDatabase() async {
+    List <Recipe>  tempRecipes = await _dbHelper.getAllRecipes();
+    setState(() {
+      recipes = tempRecipes;
+    });
+    print('Recipes form recipes page: ${recipes.length}');
+  }
 
   List<Map<dynamic, dynamic>> recipeData = [
     {
@@ -347,12 +352,12 @@ class _RecipePageState extends State<RecipePage> {
   ];
   
 
-
   @override
   void initState () {
     super.initState();
-    GR   = GetRecipes(this.context) ;
-    listOfRecipies = GR.listOfRecipies ;
+    initDatabase();
+    // GR   = GetRecipes(this.context) ;
+    // listOfRecipies = GR.listOfRecipies ;
   }
   @override
   Widget build(BuildContext context) {
@@ -360,40 +365,63 @@ class _RecipePageState extends State<RecipePage> {
       appBar: AppBar(actions: [
         IconButton(
                 onPressed: () {
-                  showSearch(context: context, delegate: MySearchDelegate());
+                  showSearch(context: context, delegate: MySearchDelegate(recipes));
                 },
                 icon: Icon(Icons.search))
       ]),
-      body:  Container(
-        color: Colors.red[200],
-        alignment: Alignment.center,
-        child: ListView.builder(
-          itemCount: recipeData.length,
+      body:  getRecipelist(),
+    );
+  }
+
+  Widget getRecipelist(){
+    if (recipes.isEmpty)
+      return Center(
+        child: CircularProgressIndicator(), // The loading indicator
+      ); 
+    return ListView.builder(
+          itemCount: recipes.length,
           itemBuilder: (context, index) {
             return RecipeTile(
-              recipeName: recipeData[index]["Recipe_title"],
+              recipeName: recipes[index].toMap()["Recipe_title"],
               // recipeName: recipeData[index].toMap()["Recipe_title"],
               onTap: ()  {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return RecipeDetailPage(
-                    title: recipeData[index]["Recipe_title"], 
-                    instruction: recipeData[index]["instructions"], 
-                    ingredient: recipeData[index]["ingredients"]
+                    title: recipes[index].toMap()["Recipe_title"], 
+                    instruction: recipes[index].toMap()["instructions"], 
+                    ingredient: recipes[index].toMap()["ingredients"]
                   );
                 }));
               },
               onPressed: () {},
             );
           }, 
-        )
-      ),
-    );
+        );
   }
+
 }
 
 
 class MySearchDelegate extends SearchDelegate {
+  List<Recipe> recipes;
+  List<Map<String, dynamic>> recipesResults = [];
+  MySearchDelegate(this.recipes);
+  // MySearchDelegate({required this.})
   static List<String> _previousSearchKeywords = [];
+
+  List<Map<String, dynamic>> listOfMaps = []; 
+
+  // void getSearch () (
+  //   for(var recipeObj in recipes){
+  //     listOfMap.a
+  //   }
+  // //   recipesResults = recipes.where((map) {
+  // //   // Assuming you want a case-insensitive search
+  // //   String name = map['name']?.toLowerCase() ?? '';
+  // //   return name.contains(query.toLowerCase());
+  // // }).toList();
+  // )
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -424,11 +452,24 @@ class MySearchDelegate extends SearchDelegate {
     // TODO: of cards i.e. listview
     if (!_previousSearchKeywords.contains(query))
       _previousSearchKeywords.add(query);
-    return Center(
-        child: Text (
-          query,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold), // Text
-        )
+    return ListView.builder(
+      itemCount: recipesResults.length,
+      itemBuilder: (context, index) {
+        return RecipeTile(
+              recipeName: recipesResults[index]["Recipe_title"],
+              // recipeName: recipeData[index].toMap()["Recipe_title"],
+              onTap: ()  {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return RecipeDetailPage(
+                    title: recipesResults[index]["Recipe_title"], 
+                    instruction: recipesResults[index]["instructions"], 
+                    ingredient: recipesResults[index]["ingredients"]
+                  );
+                }));
+              },
+              onPressed: () {},
+            );
+      },
     );
   }
 
@@ -455,5 +496,17 @@ class MySearchDelegate extends SearchDelegate {
         ); // ListTile
       },
     ); // ListView.builder I
+  }
+
+  void doSearch () {
+    for (var r in recipes){
+      listOfMaps.add(r.toMap()); 
+    }
+
+    recipesResults = listOfMaps.where((map) {
+      String name = map['Recipe_title']?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList() ;
+    
   }
 }

@@ -18,14 +18,14 @@ samples, guidance on mobile development, and a full API reference.
 
 ## TODO : 
 
-- complete recipe page 
-- History Tab 
+- ✅ complete recipe page
+- ✅ Store Tab 
 - favorites tab
 - ✅ pantry tab
 - recommended Home page 
-- search bar
+- some what done ✅ search bar
 - for the database
-  - recipe crud operations
-  - ingredient crud operations
-  - test database pulling
-  - focus on just being able to add
+  - ✅ recipe crud operations
+  - ✅ ingredient crud operations
+  - ✅ test database pulling
+  - ✅ focus on just being able to add

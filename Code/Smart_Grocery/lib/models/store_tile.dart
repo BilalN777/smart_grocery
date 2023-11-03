@@ -8,9 +8,9 @@ class StoreTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: Icon(Icons.storefront_sharp),
       title: Text(storeName),
       subtitle: Text(address),
-      
     );
   }
 }

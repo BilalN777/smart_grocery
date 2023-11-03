@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/databaseHelper.dart';
+import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/models/ingredients_tile.dart';
 
 class PantryPage extends StatefulWidget {
@@ -16,10 +20,29 @@ class _PantryPageState extends State<PantryPage> {
 
   late TextEditingController tController ;
 
+  DatabaseHelper _dbHelper = DatabaseHelper.instance;
+
+  late List <Ingredient>  ingredients ; 
+
+  Future<void> initDatabase() async {
+    
+    List <Ingredient>  tempIngredients = await _dbHelper.getAllIngredients();
+    final random = Random();
+
+    setState(() {
+      ingredients = tempIngredients;
+      for (int i = 0 ; i<ingredients.length; i++){
+        ingredients[i].qty_available = random.nextInt() as double ; 
+      }
+    });
+    print('Recipes form recipes page: ${ingredients.length}');
+  }
+
   @override
   void initState() {
     super.initState();
     tController = TextEditingController();
+    initDatabase() ; 
   }
 
   @override
@@ -42,8 +65,13 @@ class _PantryPageState extends State<PantryPage> {
           actions: [
             IconButton(onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => IngredientsAddPage()));
-            }, icon: Icon(Icons.add))
-
+            }, icon: Icon(Icons.add)),
+            IconButton(onPressed: () {
+              setState(() {
+                ingredients = [] ; 
+              });
+            } , icon: Icon(Icons.delete_forever)
+            )
 
           ],
         ),
@@ -68,15 +96,20 @@ class _PantryPageState extends State<PantryPage> {
 
     userPantry.sort();
     ListView myList = ListView.builder(
-      itemCount: userPantry.length,
+      itemCount: ingredients.length,
       itemBuilder: (context, index) {
         // final ingredient = userPantry[index];
         // todo: code to check if the count is not 1 for data base
         return IngredientTile(
-          name: userPantry[index], 
-          cost: 0.0, 
+          name: ingredients[index].toMap()["name"], 
+          quantity:1.0, 
           deleteIngrident: () => setState(() {
-            userPantry.removeAt(index); 
+            if (ingredients[index].qty_available == 1.0){
+              ingredients.removeAt(index); 
+              ingredients[index].qty_available = 0.0;
+            }
+            else 
+              ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
           })
         );
       },

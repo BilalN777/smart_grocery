@@ -1,11 +1,12 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smart_grocery/databaseHelper.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
-import 'package:smart_grocery/recipe_builder.dart';
+import 'package:smart_grocery/pages/store_page.dart';
+// import 'package:smart_grocery/databaseHelper.dart';
+// import 'package:smart_grocery/store/store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetRecipePage = RecipePage();
-    HistoryPage = BuildHistoryPage();
+    HistoryPage = StorePage();
     WidgetPantryPage = PantryPage();
     // PantryPage = BuildPantryPage();
     FavoritesPage = BuildFavouritesPage();
