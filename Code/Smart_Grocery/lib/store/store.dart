@@ -1,36 +1,39 @@
-import 'dart:collection';
+class Store {
+  String? name;
+  String? address;
+  int? zipcode;
+  String? location;
+  int? id;
 
-import '../food/item.dart';
-import '../user/user.dart';
-
-class Store extends User {
-  late int numItems ;
-  late HashMap<Item, int>? items ;
-  late String? location ;
-  late int? _paymentInfo ;
-
-  Store (String name , this.location, int phone ){
-    this.name = name ;
-    this.phone  = phone ;
-    numItems = 0 ;
+  // string has to match json
+  Map<String, dynamic> toMap() {
+    return {
+      'Store name': name,
+      'Address': address;
+      'Zip': zipcode;
+      'Location' location;
+      'store_id': id,
+    };
   }
 
-  void completeTransaction () {
-    return ;
+  Store({
+    required this.name,
+    required this.address,
+    required this.zipcode,
+    required this.location,
+    this.id
+  });
+
+
+  factory Store.fromMap(Map<String, dynamic> map) {
+    return Store(
+      name: map['Store Name'],
+      address: map['Address'],
+      zipcode: map['Zip'],
+      location: map['Location'],
+      id: map['store_id'],
+    );
   }
 
-  void removeItem(Item i){
-    items?.remove(i) ;
-  }
 
-  void addItem(Item i){
-    if (items!.containsKey(i)){
-      items?[i] = items![i]! + 1 ;
-    } else {
-      items?[i] = 1 ;
-    }
-    numItems = items!.length ;
-  }
-
-  int? get paymentInfo => _paymentInfo;
 }

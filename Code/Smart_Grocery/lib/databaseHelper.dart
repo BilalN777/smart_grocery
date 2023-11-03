@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -7,9 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
 import 'dart:convert';
 import 'package:smart_grocery/food/recipe.dart';
+import 'package:smart_grocery/food/ingredient.dart';
+import 'package:smart_grocery/store/store.dart';
+
 // import 'package:Smart_Grocery/lib/food/recipe.dart';
 
-// Add imports for each of the data classes
 
 
 
@@ -28,9 +33,6 @@ class DatabaseHelper {
 
   // add table vars here
   static final usersTable = 'users';
-  static final recipeTable = 'recipes';
-  static final itemTable = 'ingredients';
-
   // the columns in the users.csv file
   static final columnUserId = 'ID';
   static final columnName = 'Name';
@@ -41,13 +43,30 @@ class DatabaseHelper {
   static final columnPaymentInfo = 'PaymentINFO';
   static final columnFoodPreferences = 'FoodPreference';
 
-  // the columns in the recipe json
+
+  // recipes
+  static final recipeTable = 'recipes';
   static final columnRecipeTitle = 'Recipe_title';
   static final columnInstructions = 'instructions';
   static final columnIngredients = 'ingredients';
   static final columnRecipeId = 'recipe_id';
-  // static final columnIngredientId = 'ingredient_id';
-  // static final columnIngredientName = 'ingredient';
+
+  // Ingredients
+  static final ingredientsTable = 'ingredients';
+  static final columnIngredientName = 'ingredient';
+  static final columnIngredientId = 'ingredient_id';
+  static final columnIngredientCost = 'cost';
+  static final columnIngredientQty = 'inventory_qty';
+
+  // Stores
+  static final groceryStoresTable = 'grocery_stores';
+  static final columnStoreName = 'Store name';
+  static final columnStoreAddress = 'Address';
+  static final columnStoreZip = 'Zip';
+  static final columnStoreLocation = 'Location';
+  static final columnStoreId = 'store_id';
+
+
 
   // Making it a Singleton
   DatabaseHelper._privateConstructor();
@@ -169,114 +188,118 @@ class DatabaseHelper {
              $columnRecipeId INTEGER PRIMARY KEY
            )
            ''');
+    await db.execute('''CREATE TABLE $ingredientsTable(
+            $columnIngredientName TEXT NOT NULL,
+            $columnIngredientId INTEGER PRIMARY KEY,
+            $columnIngredientCost DOUBLE,
+            $columnIngredientQty DOUBLE
+            )
+            ''');
+
+    await db.execute('''CREATE TABLE $groceryStoresTable(
+            $columnStoreName TEXT,
+            $columnStoreAddress TEXT,
+            $columnStoreZip INTEGER,
+            $columnStoreLocation TEXT,
+            $columnStoreId INTEGER PRIMARY KEY
+            )
+            ''');
+
   }
 
 
+  // RECIPE OPERATIONS
+
   // the updated version of inserting a recipe
-  Future<int> insertRecipe_2(Recipe recipe) async{
+  Future<int> insertRecipe(Recipe recipe) async{
     Database db = await instance.database;
     return await db.insert(recipeTable, recipe.toMap());
   }
 
-
-
-
-  Future<int> insertRecipe(Map<String, dynamic> recipe) async {
-    Database db = await instance.database;
-    return await db.insert(recipeTable, recipe);
-  }
-
   // Read: fetch all recipes from the DB
+  // DELETE IF NOT NEEDED
   Future<List<Map<String, dynamic>>> queryAllRecipes() async {
     Database db = await instance.database;
     return await db.query(recipeTable);
   }
 
-  // Update: modify an existing recipe in the DB
-  Future<int> updateRecipe(Map<String, dynamic> recipe) async {
+  // updated version of get all recipes
+  Future<List<Recipe>> getAllRecipes() async {
     Database db = await instance.database;
-    int id = recipe[columnRecipeId];
-    return await db.update(recipeTable, recipe, where: '$columnRecipeId = ?', whereArgs: [id]);
+    List<Map<String, dynamic>> maps = await db.query(recipeTable);
+    return List.generate(maps.length, (i) {
+      return Recipe.fromMap(maps[i]);
+    });
   }
 
-  // Delete: remove a recipe from the DB
+  // updated version of updating a recipe
+  Future<int> updateRecipe(Recipe recipe) async {
+    Database db = await instance.database;
+    return await db.update(recipeTable, recipe.toMap(),
+        where: '$columnRecipeId = ?', whereArgs: [recipe.recipe_id]);
+  }
+
   Future<int> deleteRecipe(int id) async {
     Database db = await instance.database;
     return await db.delete(recipeTable, where: '$columnRecipeId = ?', whereArgs: [id]);
   }
 
-  // INGREDIENT CRUD operations
 
-  // // Create: insert a new ingredient into the DB
-  //   Future<int> insertIngredient(String ingredientName) async {
-  //     Database db = await instance.database;
-  //     return await db.insert(itemTable, {columnIngredientName: ingredientName});
-  //   }
-  //
-  // // Read: fetch all ingredients from the DB
-  //   Future<List<Map<String, dynamic>>> queryAllIngredients() async {
-  //     Database db = await instance.database;
-  //     return await db.query(itemTable);
-  //   }
-  //
-  // // Read: fetch a specific ingredient by its ID
-  //   Future<Map<String, dynamic>> queryIngredientById(int id) async {
-  //     Database db = await instance.database;
-  //     var result = await db.query(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
-  //     return result.first;
-  //   }
-  //
-  // // Update: modify an existing ingredient in the DB by its ID
-  //   Future<int> updateIngredient(int id, String newIngredientName) async {
-  //     Database db = await instance.database;
-  //     return await db.update(
-  //         itemTable,
-  //         {columnIngredientName: newIngredientName},
-  //         where: '$columnIngredientId = ?',
-  //         whereArgs: [id]
-  //     );
-  //   }
-  //
-  // // Delete: remove an ingredient from the DB by its ID
-  //   Future<int> deleteIngredient(int id) async {
-  //     Database db = await instance.database;
-  //     return await db.delete(itemTable, where: '$columnIngredientId = ?', whereArgs: [id]);
-  //   }
+  // INGREDIENT OPERATIONS
 
-  // Future<void> loadUsersFromCSV() async {
-  //   // Load CSV from assets
-  //   String csvData = await rootBundle.loadString('assets/data/users.csv');
-  //
-  //   List<List<dynamic>> csvList = CsvToListConverter().convert(csvData);
-  //
-  //   // Skip the first row if it's a header
-  //   for (int i = 1; i < csvList.length; i++) {
-  //     Map<String, dynamic> user = {
-  //       columnUserId: csvList[i][0],
-  //       columnName: csvList[i][1],
-  //       columnEmail: csvList[i][2],
-  //       columnPhoneNumber: csvList[i][3],
-  //       columnUserName: csvList[i][4],
-  //       columnLocation: csvList[i][5],
-  //       columnPaymentInfo: csvList[i][6],
-  //       columnFoodPreferences: csvList[i][7]
-  //     };
-  //
-  //     // await insertUser(user);
-  //   }
-  // }
+  Future<int> insertIngredient(Ingredient ingredient) async{
+    Database db = await instance.database;
+    return await db.insert(ingredientsTable, ingredient.toMap());
+  }
 
-  // // Load the ingredients
-  // Future<void> loadIngredientsFromJSON() async {
-  //   // Load JSON from assets
-  //   String jsonData = await rootBundle.loadString('assets/data/Sorted_Ingredients.json');
-  //
-  //   List<dynamic> ingredientList = json.decode(jsonData);
-  //
-  //   for (var ingredient in ingredientList) {
-  //     await insertIngredient(ingredient);
-  //   }
-  // }
+  Future<List<Ingredient>> getAllIngredients() async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> maps = await db.query(ingredientsTable);
+    return List.generate(maps.length, (i) {
+      return Ingredient.fromMap(maps[i]);
+    });
+  }
+
+  // updated version of updating a recipe
+  Future<int> updateIngredient(Ingredient ingredient) async {
+    Database db = await instance.database;
+    return await db.update(ingredientsTable, ingredient.toMap(),
+        where: '$columnIngredientId = ?', whereArgs: [ingredient.ingredient_id]);
+  }
+
+  Future<int> deleteIngredient(int id) async {
+    Database db = await instance.database;
+    return await db.delete(ingredientsTable, where: '$columnIngredientId = ?', whereArgs: [id]);
+  }
+
+
+  // Store operations
+
+  Future<int> insertStore(Store store) async{
+    Database db = await instance.database;
+    return await db.insert(recipeTable, store.toMap());
+  }
+
+  Future<List<Store>> getAllStores() async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> maps = await db.query(groceryStoresTable);
+    return List.generate(maps.length, (i) {
+      return Store.fromMap(maps[i]);
+    });
+  }
+
+  // updated version of updating a recipe
+  Future<int> updateStore(Store store) async {
+    Database db = await instance.database;
+    return await db.update(groceryStoresTable, store.toMap(),
+        where: '$columnStoreId = ?', whereArgs: [store.id]);
+  }
+
+  Future<int> deleteStore(int id) async {
+    Database db = await instance.database;
+    return await db.delete(groceryStoresTable, where: '$columnStoreId = ?', whereArgs: [id]);
+  }
+
 
   // Load the recipes
   Future<void> loadRecipesFromJSON() async {
@@ -294,6 +317,13 @@ class DatabaseHelper {
       };
       await insertRecipe(recipeMap);
     }
+  }
+  List<dynamic> jsonData = [];
+
+  Future<List<dynamic>> loadJsonAsset() async {
+    final String jsonString = await rootBundle.loadString('assets/data2.json');
+    List<dynamic> data = jsonDecode(jsonString);
+    return data;
   }
 
 
