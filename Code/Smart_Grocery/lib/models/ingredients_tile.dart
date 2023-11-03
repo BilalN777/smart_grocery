@@ -10,7 +10,7 @@ class IngredientTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text('$name'),
-      subtitle: Text('$quantity'),
+      subtitle: Text('Quanty: $quantity'),
       trailing: IconButton(icon: Icon(Icons.delete), onPressed: deleteIngrident,),
     );
   }

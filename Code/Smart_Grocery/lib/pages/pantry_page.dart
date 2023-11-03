@@ -8,8 +8,6 @@ import 'package:smart_grocery/models/ingredients_tile.dart';
 class PantryPage extends StatefulWidget {
   const PantryPage({super.key});
 
-
-
   @override
   State<PantryPage> createState() => _PantryPageState();
 }
@@ -22,7 +20,7 @@ class _PantryPageState extends State<PantryPage> {
 
   DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-  late List <Ingredient>  ingredients ; 
+  static List <Ingredient>  ingredients = []; 
 
   Future<void> initDatabase() async {
     
@@ -32,7 +30,7 @@ class _PantryPageState extends State<PantryPage> {
     setState(() {
       ingredients = tempIngredients;
       for (int i = 0 ; i<ingredients.length; i++){
-        ingredients[i].qty_available = random.nextInt() as double ; 
+        ingredients[i].qty_available = random.nextInt(5).toDouble() ; 
       }
     });
     print('Recipes form recipes page: ${ingredients.length}');
@@ -51,14 +49,9 @@ class _PantryPageState extends State<PantryPage> {
     super.dispose();
   }
 
-  void deleteIngredentFromPantry () {
-    
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    if (userPantry.length == 0)
+    if (ingredients.length == 0)
       return Scaffold(
         appBar: AppBar(
           title: Text("Pantry"),
@@ -72,7 +65,6 @@ class _PantryPageState extends State<PantryPage> {
               });
             } , icon: Icon(Icons.delete_forever)
             )
-
           ],
         ),
         body : Container(
@@ -94,22 +86,23 @@ class _PantryPageState extends State<PantryPage> {
         ),
       );
 
-    userPantry.sort();
+    // userPantry.sort();
     ListView myList = ListView.builder(
       itemCount: ingredients.length,
       itemBuilder: (context, index) {
         // final ingredient = userPantry[index];
         // todo: code to check if the count is not 1 for data base
+        print("$index") ; 
         return IngredientTile(
           name: ingredients[index].toMap()["name"], 
           quantity:1.0, 
           deleteIngrident: () => setState(() {
-            if (ingredients[index].qty_available == 1.0){
+            // if (ingredients[index].qty_available == 1.0){
+              // ingredients[index].qty_available = 0.0;
               ingredients.removeAt(index); 
-              ingredients[index].qty_available = 0.0;
-            }
-            else 
-              ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
+            // }
+            // else 
+            //   ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
           })
         );
       },
@@ -123,7 +116,13 @@ class _PantryPageState extends State<PantryPage> {
         actions: [
           IconButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => IngredientsAddPage()));
-          }, icon: Icon(Icons.add))
+          }, icon: Icon(Icons.add)),
+          IconButton(onPressed: () {
+              setState(() {
+                ingredients = [] ; 
+              });
+            } , icon: Icon(Icons.delete_forever)
+          )
         ],
       ),
       body:myList,
@@ -156,6 +155,7 @@ class _PantryPageState extends State<PantryPage> {
                   if (text.isNotEmpty){
                     setState(() {
                       userPantry.add(newIngredient);
+                      ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
                     });
                     tController.clear() ; 
                     Navigator.pop(context);
@@ -167,6 +167,7 @@ class _PantryPageState extends State<PantryPage> {
                 if (newIngredient.isNotEmpty)
                   setState(() {
                     userPantry.add(newIngredient);
+                    ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
                   });
                 tController.clear(); 
                 Navigator.pop(context);
