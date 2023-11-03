@@ -391,9 +391,16 @@ class _RecipePageState extends State<RecipePage> {
                     instruction: recipes[index].toMap()["instructions"], 
                     ingredient: recipes[index].toMap()["ingredients"]
                   );
+                  
                 }));
               },
-              onPressed: () {},
+              onPressed: () {
+                // TODO add logic for add to favours and modify the data base
+                // todo update database 
+                _dbHelper.toggleFavoriteStatus(recipes[index].recipe_id!, 1); 
+                // todo update local variable using setStatea
+                initDatabase();
+              },
             );
           }, 
         );
