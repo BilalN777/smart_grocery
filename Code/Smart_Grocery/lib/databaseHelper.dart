@@ -53,14 +53,14 @@ class DatabaseHelper {
 
   // Ingredients
   static final ingredientsTable = 'ingredients';
-  static final columnIngredientName = 'ingredient';
+  static final columnIngredientName = 'name';
   static final columnIngredientId = 'ingredient_id';
   static final columnIngredientCost = 'cost';
   static final columnIngredientQty = 'inventory_qty';
 
   // Stores
   static final groceryStoresTable = 'grocery_stores';
-  static final columnStoreName = 'Store name';
+  static final columnStoreName = 'store_name';
   static final columnStoreAddress = 'Address';
   static final columnStoreZip = 'Zip';
   static final columnStoreLocation = 'Location';
@@ -92,123 +92,77 @@ class DatabaseHelper {
         onCreate: _onCreate);
   }
 
-  // Future _onCreate(Database db, int version) async {
-  //
-  //   // add tables here
-  //
-  //   // users table
-  //   // await db.execute('''
-  //   //       CREATE TABLE $usersTable (
-  //   //         $columnUserId INTEGER PRIMARY KEY,
-  //   //         $columnName TEXT NOT NULL,
-  //   //         $columnEmail TEXT NOT NULL,
-  //   //         $columnPhoneNumber TEXT,
-  //   //         $columnUserName TEXT NOT NULL,
-  //   //         $columnLocation TEXT,
-  //   //         $columnPaymentInfo TEXT,
-  //   //         $columnFoodPreferences TEXT
-  //   //       )
-  //   //       ''');
-  //
-  //   // recipe table
-  //   // await db.execute('''
-  //   //       CREATE TABLE $recipeTable (
-  //   //       $columnRecipeTitle TEXT,
-  //   //       $columnInstructions TEXT,
-  //   //       $columnIngredients TEXT,
-  //   //       $columnRecipeId INTEGER PRIMARY KEY
-  //   //       )
-  //   //       ''');
-  //
-  //   await db.execute('''
-  //         CREATE TABLE $recipeTable (
-  //         $columnRecipeTitle TEXT,
-  //         $columnInstructions TEXT,
-  //         $columnIngredients TEXT,
-  //         $columnRecipeId INTEGER PRIMARY KEY
-  //         )
-  //         ''');
-  //   // ingredients table
-  //   // await db.execute('''
-  //   //       CREATE TABLE $_itemTable (
-  //   //       $columnRecipeId INTEGER PRIMARY KEY,
-  //   //       $columnRecipeTitle TEXT,
-  //   //       $columnIngredients TEXT,
-  //   //       FOREIGN KEY($columnRecipeId) REFERENCES $_recipeTable($columnRecipeId)
-  //   //       )
-  //   //       ''');
-  //   // await db.execute('''
-  //   //       CREATE TABLE $itemTable (
-  //   //       $columnIngredientId INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   //       $columnIngredientName TEXT NOT NULL
-  //   //   )
-  //   //   ''');
-  //
-  // }
-
-  // CRUD operations
-
-  // // USER operations
-  //
-  // // Create: insert a user into the DB
-  // Future<int> insertUser(Map<String, dynamic> user) async {
-  //   Database db = await instance.database;
-  //   return await db.insert(usersTable, user);
-  // }
-  //
-  // // Read: find a user in the DB
-  // Future<List<Map<String, dynamic>>> queryAllUsers() async {
-  //   Database db = await instance.database;
-  //   return await db.query(usersTable);
-  // }
-  //
-  // // Update: change user details
-  // Future<int> updateUser(Map<String, dynamic> user) async {
-  //   Database db = await instance.database;
-  //   int id = user[columnUserId];
-  //   return await db.update(usersTable, user, where: '$columnUserId = ?', whereArgs: [id]);
-  // }
-  //
-  // // Delete: remove a user from the DB
-  // Future<int> deleteUser(int id) async {
-  //   Database db = await instance.database;
-  //   return await db.delete(usersTable, where: '$columnUserId = ?', whereArgs: [id]);
-  // }
-
-  // RECIPE operations
-
-  // Create: insert a recipe into the DB
-
   Future _onCreate(Database db, int version) async {
+
+    // create the tables
     await db.execute('''
            CREATE TABLE $recipeTable (
+             $columnRecipeId INTEGER PRIMARY KEY,
              $columnRecipeTitle TEXT NOT NULL,
-             $columnInstructions TEXT,
-             $columnIngredients TEXT NOT NULL,
-             $columnRecipeId INTEGER PRIMARY KEY
+             $columnInstructions LONGTEXT,
+             $columnIngredients LONGTEXT NOT NULL
            )
            ''');
-    await db.execute('''CREATE TABLE $ingredientsTable(
-            $columnIngredientName TEXT NOT NULL,
+    await db.execute('''
+          CREATE TABLE $ingredientsTable(
             $columnIngredientId INTEGER PRIMARY KEY,
+            $columnIngredientName LONGTEXT NOT NULL,
             $columnIngredientCost DOUBLE,
             $columnIngredientQty DOUBLE
             )
             ''');
 
-    await db.execute('''CREATE TABLE $groceryStoresTable(
-            $columnStoreName TEXT,
-            $columnStoreAddress TEXT,
-            $columnStoreZip INTEGER,
-            $columnStoreLocation TEXT,
-            $columnStoreId INTEGER PRIMARY KEY
+    await db.execute('''
+          CREATE TABLE $groceryStoresTable(
+            $columnStoreId INTEGER PRIMARY KEY,
+            $columnStoreName LONGTEXT NOT NULL,
+            $columnStoreAddress LONGTEXT NOT NULL,
+            $columnStoreZip TEXT,
+            $columnStoreLocation LONGTEXT NOT NULL
             )
             ''');
 
-  //   call json load for recipe json
-  //   data = jsonfile
-  //   populate table with data
+    String recipesJsonString = await rootBundle.loadString('assets/data/recipes.json');
+    // print(recipesJsonString);
+    List<dynamic> recipes = json.decode(recipesJsonString);
+    // Insert recipes into the database
+    for (var recipe in recipes) {
+      await db.insert(recipeTable, {
+        columnRecipeTitle: recipe['Recipe_title'],
+        columnInstructions: json.encode(recipe['instructions']), // Assuming it's a JSON array or object
+        columnIngredients: json.encode(recipe['ingredients']), // Assuming it's a JSON array or object
+        columnRecipeId: recipe['recipe_id'],
+      });
+    }
 
+    String ingredientsJsonString = await rootBundle.loadString('assets/data/ingredients_with_costs_and_zero_inventory.json');
+    // print(ingredientsJsonString);
+
+    List<dynamic> ingredients = json.decode(ingredientsJsonString);
+
+    for(var ing in ingredients){
+      await db.insert(ingredientsTable, {
+        columnIngredientName: ing['name'],
+        columnIngredientId: ing['ingredient_id'],
+        columnIngredientCost: ing['cost'],
+        columnIngredientQty: ing['inventory_qty'],
+
+      });
+    }
+
+    String groceryStoresJsonString = await rootBundle.loadString('assets/data/Grocery_Stores.json');
+    // print(groceryStoresJsonString);
+    List<dynamic> stores = json.decode(groceryStoresJsonString);
+
+    for(var store in stores){
+      await db.insert(groceryStoresTable, {
+        columnStoreName: store['store_name'],
+        columnStoreAddress: store['Address'],
+        columnStoreZip: store['Zip'],
+        columnStoreLocation: store['Location'],
+        columnStoreId: store['store_id'],
+      });
+    }
 
   }
 
@@ -222,12 +176,6 @@ class DatabaseHelper {
   }
 
   // Read: fetch all recipes from the DB
-  // DELETE IF NOT NEEDED
-  Future<List<Map<String, dynamic>>> queryAllRecipes() async {
-    Database db = await instance.database;
-    return await db.query(recipeTable);
-  }
-
   // updated version of get all recipes
   Future<List<Recipe>> getAllRecipes() async {
     Database db = await instance.database;
@@ -282,7 +230,7 @@ class DatabaseHelper {
 
   Future<int> insertStore(Store store) async{
     Database db = await instance.database;
-    return await db.insert(recipeTable, store.toMap());
+    return await db.insert(groceryStoresTable, store.toMap());
   }
 
   Future<List<Store>> getAllStores() async {

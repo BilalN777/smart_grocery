@@ -38,6 +38,10 @@ class Recipe {
     );
   }
 
+  String toString() {
+    return 'Recipe{Recipe_title: $Recipe_title, instructions: $instructions, ingredients: $ingredients, recipe_id: $recipe_id}\n';
+  }
+
 }
 
 
