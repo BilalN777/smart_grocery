@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_grocery/databaseHelper.dart';
 import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/models/ingredients_tile.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class PantryPage extends StatefulWidget {
   const PantryPage({super.key});

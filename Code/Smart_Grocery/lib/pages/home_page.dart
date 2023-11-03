@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
+import 'package:smart_grocery/pages/favorites_page.dart';
 // import 'package:smart_grocery/databaseHelper.dart';
 // import 'package:smart_grocery/store/store.dart';
 
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   late Widget WidgetRecipePage;
   late Widget HistoryPage ;
   late Widget WidgetPantryPage ;
-  late Widget FavoritesPage ;
+  late Widget WidgetFavoritesPage ;
 
 
   // TODO : change to get user pantry
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     HistoryPage = StorePage();
     WidgetPantryPage = PantryPage();
     // PantryPage = BuildPantryPage();
-    FavoritesPage = BuildFavouritesPage();
+    WidgetFavoritesPage = FavoritesPage();
   }
 
   late Future<List<Map<String, dynamic>>> listOfRecipies;
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         WidgetRecipePage,
         HistoryPage,
         WidgetPantryPage,
-        FavoritesPage,
+        WidgetFavoritesPage,
       ][currentPageIndex],
       drawer: Drawer(
         child: ListView(
