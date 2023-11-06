@@ -32,7 +32,8 @@ Smart_Grocery/DATA/scripts.py
 .pub-cache/
 .pub/
 /build/
-
+pubspec.lock
+assets/data/Food_Images
 # Symbolication related
 app.*.symbols
 
