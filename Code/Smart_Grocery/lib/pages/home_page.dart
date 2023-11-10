@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: null,
-        backgroundColor: Colors.deepPurple,
+        elevation: 0,
         title: const Text('Smart Grocery'),
       ),
       body: <Widget>[
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: Colors.blueGrey,
               ),
               child: Text(
                 'Smart Grocery',

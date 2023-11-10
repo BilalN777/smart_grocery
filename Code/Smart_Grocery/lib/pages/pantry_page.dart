@@ -132,6 +132,7 @@ class _PantryPageState extends State<PantryPage> {
 
   IngredientsAddPage(){
     String newIngredient = "" ;
+    int Count = 0 ; 
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Ingredient"),

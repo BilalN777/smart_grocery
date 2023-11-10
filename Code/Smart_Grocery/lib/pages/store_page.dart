@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_grocery/appState.dart';
 import 'package:smart_grocery/models/store_tile.dart';
 import 'package:smart_grocery/store/store.dart';
 import 'package:smart_grocery/databaseHelper.dart';
@@ -34,23 +36,35 @@ class _StorePageState extends State<StorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: getListOfStore() ,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Stores"),
+      ) ,
+      body: getListOfStore() ,
     ); 
   }
 
   Widget getListOfStore() {
-    if (storeList.isEmpty)
+    // if (storeList.isEmpty)
+    if (Provider.of<AppData>(context, listen: false).listOfStores.isEmpty)
       return Center(
         child: CircularProgressIndicator(), // The loading indicator
       );
-    return ListView.builder(
-      itemCount: storeList.length,
-      itemBuilder: ((context, index) {
-        return StoreTile(
-          storeName: storeList[index].toMap()["store_name"],
-          address: storeList[index].toMap()["Address"],
-        );
-    }));
+    return Consumer(
+      builder: (context, database, child) {
+        return ListView.builder(
+          itemCount: storeList.length,
+          itemBuilder: ((context, index) {
+            return StoreTile(
+              storeName: storeList[index].toMap()["store_name"],
+              address: storeList[index].toMap()["Address"],
+            );
+        }));
+      },
+    ); 
+    
+    
+    
+    
   }
 }

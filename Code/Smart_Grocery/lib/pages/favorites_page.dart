@@ -360,7 +360,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
+      appBar: AppBar(
+        title: Text("Favourites"),
+        actions: [
         IconButton(
                 onPressed: () {
                   showSearch(context: context, delegate: MySearchDelegate(recipes));

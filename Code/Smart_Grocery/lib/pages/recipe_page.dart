@@ -362,7 +362,9 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
+      appBar: AppBar(
+        title: Text("Recieps"),
+        actions: [
         IconButton(
                 onPressed: () {
                   showSearch(context: context, delegate: MySearchDelegate(recipes));
