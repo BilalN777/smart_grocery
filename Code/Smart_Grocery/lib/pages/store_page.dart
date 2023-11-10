@@ -50,14 +50,14 @@ class _StorePageState extends State<StorePage> {
       return Center(
         child: CircularProgressIndicator(), // The loading indicator
       );
-    return Consumer(
+    return Consumer<AppData>(
       builder: (context, database, child) {
         return ListView.builder(
-          itemCount: storeList.length,
+          itemCount: database.listOfStores.length,
           itemBuilder: ((context, index) {
             return StoreTile(
-              storeName: storeList[index].toMap()["store_name"],
-              address: storeList[index].toMap()["Address"],
+              storeName: database.listOfStores[index].toMap()["store_name"],
+              address: database.listOfStores[index].toMap()["Address"],
             );
         }));
       },

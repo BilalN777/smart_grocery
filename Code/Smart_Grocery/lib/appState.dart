@@ -33,5 +33,20 @@ class AppData extends ChangeNotifier  {
   
   }
 
+  ClearAllIngredients () {
+    listOfIngredients = [] ; 
+    notifyListeners();
+  }
+
+  RemoveIngredientAt(int index){
+    listOfIngredients.removeAt(index);
+    notifyListeners(); 
+  }
+
+  AddIngredient(Ingredient item) {
+    listOfIngredients.add(item); 
+    notifyListeners(); 
+  }
 
 }
+

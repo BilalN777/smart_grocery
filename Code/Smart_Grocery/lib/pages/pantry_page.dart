@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_grocery/appState.dart';
 import 'package:smart_grocery/databaseHelper.dart';
 import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/models/ingredients_tile.dart';
@@ -52,7 +54,8 @@ class _PantryPageState extends State<PantryPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (ingredients.length == 0)
+    // if (ingredients.length == 0)
+    if(Provider.of<AppData>(context, listen: false).listOfIngredients.isEmpty)
       return Scaffold(
         appBar: AppBar(
           title: Text("Pantry"),
@@ -61,9 +64,10 @@ class _PantryPageState extends State<PantryPage> {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => IngredientsAddPage()));
             }, icon: Icon(Icons.add)),
             IconButton(onPressed: () {
-              setState(() {
-                ingredients = [] ; 
-              });
+              // setState(() {
+              //   ingredients = [] ; 
+              // });
+              Provider.of<AppData>(context, listen: false).ClearAllIngredients(); 
             } , icon: Icon(Icons.delete_forever)
             )
           ],
@@ -87,27 +91,27 @@ class _PantryPageState extends State<PantryPage> {
         ),
       );
 
-    // userPantry.sort();
-    ListView myList = ListView.builder(
-      itemCount: ingredients.length,
-      itemBuilder: (context, index) {
-        // final ingredient = userPantry[index];
-        // todo: code to check if the count is not 1 for data base
-        print("$index") ; 
-        return IngredientTile(
-          name: ingredients[index].toMap()["name"], 
-          quantity:1.0, 
-          deleteIngrident: () => setState(() {
-            // if (ingredients[index].qty_available == 1.0){
-              // ingredients[index].qty_available = 0.0;
-              ingredients.removeAt(index); 
-            // }
-            // else 
-            //   ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
-          })
-        );
-      },
-    );
+    // // userPantry.sort();
+    // ListView myList = ListView.builder(
+    //   itemCount: ingredients.length,
+    //   itemBuilder: (context, index) {
+    //     // final ingredient = userPantry[index];
+    //     // todo: code to check if the count is not 1 for data base
+    //     print("$index") ; 
+    //     return IngredientTile(
+    //       name: ingredients[index].toMap()["name"], 
+    //       quantity:1.0, 
+    //       deleteIngrident: () => setState(() {
+    //         // if (ingredients[index].qty_available == 1.0){
+    //           // ingredients[index].qty_available = 0.0;
+    //           ingredients.removeAt(index); 
+    //         // }
+    //         // else 
+    //         //   ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
+    //       })
+    //     );
+    //   },
+    // );
 
 
 
@@ -119,14 +123,39 @@ class _PantryPageState extends State<PantryPage> {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => IngredientsAddPage()));
           }, icon: Icon(Icons.add)),
           IconButton(onPressed: () {
-              setState(() {
-                ingredients = [] ; 
-              });
+              // setState(() {
+              //   ingredients = [] ; 
+              // });
+              Provider.of<AppData>(context, listen: false).ClearAllIngredients(); 
             } , icon: Icon(Icons.delete_forever)
           )
         ],
       ),
-      body:myList,
+      body:Consumer<AppData>(
+        builder: (context, database, child) {
+          return ListView.builder(
+            itemCount: database.listOfIngredients.length,
+            itemBuilder: (context, index) {
+              // final ingredient = userPantry[index];
+              // todo: code to check if the count is not 1 for data base
+              // print("$index") ; 
+              return IngredientTile(
+                name: database.listOfIngredients[index].toMap()["name"], 
+                quantity:1.0, 
+                deleteIngrident: () => database.RemoveIngredientAt(index),
+                // deleteIngrident: () => setState(() {
+                //   // if (ingredients[index].qty_available == 1.0){
+                //     // ingredients[index].qty_available = 0.0;
+                //     ingredients.removeAt(index); 
+                //   // }
+                //   // else 
+                //   //   ingredients[index].qty_available = ((ingredients[index].qty_available as int) -  1) as double; 
+                // })
+              );
+            },
+          );
+        }
+      ),
     );
   }
 
@@ -140,41 +169,61 @@ class _PantryPageState extends State<PantryPage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)
-                ),
-                autofocus: true,
-                controller: tController,
-                onChanged: (text) {
-                  newIngredient = text;
-                },
-                onSubmitted: (text) {
-                  if (text.isNotEmpty){
-                    setState(() {
-                      userPantry.add(newIngredient);
-                      ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
-                    });
-                    tController.clear() ; 
+          child: Consumer<AppData>(
+            builder: (contex, database, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)
+                    ),
+                    autofocus: true,
+                    controller: tController,
+                    onChanged: (text) {
+                      newIngredient = text;
+                    },
+                    onSubmitted: (text) {
+                      if (text.isNotEmpty){
+                        // setState(() {
+                        //   userPantry.add(newIngredient);
+                        //   ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
+                        // });
+                        database.AddIngredient(
+                          Ingredient(
+                            name: newIngredient, 
+                            ingredient_id: -1, 
+                            cost: 0.0, 
+                            qty_available: 1.0
+                          )
+                        ); 
+                        tController.clear() ; 
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20,),
+                  ElevatedButton(onPressed: () {
+                    if (newIngredient.isNotEmpty)
+                      // setState(() {
+                      //   userPantry.add(newIngredient);
+                      //   ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
+                      // });
+                      database.AddIngredient(
+                        Ingredient(
+                          name: newIngredient, 
+                          ingredient_id: -1, 
+                          cost: 0.0, 
+                          qty_available: 1.0
+                        )
+                      ); 
+                    tController.clear(); 
                     Navigator.pop(context);
-                  }
-                },
-              ),
-              SizedBox(height: 20,),
-              ElevatedButton(onPressed: () {
-                if (newIngredient.isNotEmpty)
-                  setState(() {
-                    userPantry.add(newIngredient);
-                    ingredients.add(Ingredient(name: newIngredient, ingredient_id: -1, cost: 0.0, qty_available: 1.0));
-                  });
-                tController.clear(); 
-                Navigator.pop(context);
-              }, child: Text("Add"))
-            ],
+                  }, child: Text("Add"))
+                ],
+              );
+            }
           ),
         ),
       ),
