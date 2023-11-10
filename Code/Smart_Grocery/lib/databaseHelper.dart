@@ -40,6 +40,7 @@ class DatabaseHelper {
   static final columnIngredients = 'ingredients';
   static final columnRecipeId = 'recipe_id';
   static final columnIsFavorite = 'isFavorite';
+  static final columnImagePath = 'image_name';
 
   // Ingredients
   static final ingredientsTable = 'ingredients';
@@ -91,7 +92,8 @@ class DatabaseHelper {
              $columnRecipeTitle TEXT NOT NULL,
              $columnInstructions LONGTEXT,
              $columnIngredients LONGTEXT NOT NULL,
-             $columnIsFavorite INTEGER NOT NULL
+             $columnIsFavorite INTEGER NOT NULL,
+             $columnImagePath TEXT
            )
            ''');
     await db.execute('''
@@ -119,8 +121,14 @@ class DatabaseHelper {
     bool storesPopulated = await _isTablePopulated(db, groceryStoresTable);
 
     if(!recipesPopulated) {
+      // String recipesJsonString = await rootBundle.loadString(
+      //     'assets/data/recipes.json');
+
+
       String recipesJsonString = await rootBundle.loadString(
-          'assets/data/recipes.json');
+          'assets/data/recipes_with_images.json');
+
+
       // print(recipesJsonString);
       List<dynamic> recipes = json.decode(recipesJsonString);
       // Insert recipes into the database
@@ -132,7 +140,8 @@ class DatabaseHelper {
           columnIngredients: json.encode(recipe['ingredients']),
           // Assuming it's a JSON array or object
           columnRecipeId: recipe['recipe_id'],
-          columnIsFavorite : recipe['isFavorite']
+          columnIsFavorite : recipe['isFavorite'],
+          columnImagePath : recipe['image_path']
         });
       }
     }
