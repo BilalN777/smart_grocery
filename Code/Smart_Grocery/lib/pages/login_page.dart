@@ -4,23 +4,6 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Smart Grocery',
-      theme: ThemeData(
-        // primarySwatch: Colors.deepPurple,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey),
-        
-      ),
-      home: const LoginPage(),
-    );
-  }
-}
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 

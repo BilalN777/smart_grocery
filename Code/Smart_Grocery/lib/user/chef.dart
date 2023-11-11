@@ -1,4 +1,3 @@
-import 'package:smart_grocery/food/recipe.dart';
 import 'package:smart_grocery/user/user.dart';
 
 class Chef extends User{

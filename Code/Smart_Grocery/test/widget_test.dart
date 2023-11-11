@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:smart_grocery/main.dart';
 import 'package:smart_grocery/pages/login_page.dart';
 // import 'package:smart_grocery/pages/login_page.dart';
 

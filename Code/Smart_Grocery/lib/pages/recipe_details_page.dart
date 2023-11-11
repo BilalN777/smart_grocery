@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-
 class RecipeDetailPage extends StatelessWidget {
   final String title;
   final List instruction; 
@@ -14,7 +12,6 @@ class RecipeDetailPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10 ,top: 8, bottom: 8),
         child: ListView(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(child: Icon(Icons.restaurant_menu_sharp,size: 100,)), 
             SizedBox(height: 50,),

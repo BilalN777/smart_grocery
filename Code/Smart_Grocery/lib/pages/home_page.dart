@@ -1,13 +1,9 @@
-// import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
 import 'package:smart_grocery/pages/favorites_page.dart';
-// import 'package:smart_grocery/databaseHelper.dart';
-// import 'package:smart_grocery/store/store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +29,6 @@ class _HomePageState extends State<HomePage> {
     WidgetRecipePage = RecipePage();
     HistoryPage = StorePage();
     WidgetPantryPage = PantryPage();
-    // PantryPage = BuildPantryPage();
     WidgetFavoritesPage = FavoritesPage();
   }
 
@@ -43,8 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: null,
-        backgroundColor: Colors.deepPurple,
+        elevation: 0,
         title: const Text('Smart Grocery'),
       ),
       body: <Widget>[
@@ -59,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.deepPurple,
+                color: Colors.blueGrey,
               ),
               child: Text(
                 'Smart Grocery',
@@ -129,106 +123,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container BuildHistoryPage() {
-    return Container(
-      color: Colors.blue[200],
-      alignment: Alignment.center,
-      child: const Text('Page 3'),
-    );
-  }
-
-  // StatelessWidget BuildPantryPage() {
-  //   if (userPantry.length == 0)
-  //     return Container(
-  //       // color: Colors.green[200],
-  //       alignment: Alignment.center,
-  //       child: Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           const Text('Tap the "Plus Icon" on the top right or Add button below to add ingredients to your pantry.',
-  //             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //           SizedBox(height: 20,),
-  //           ElevatedButton(onPressed: () {} , child: Text("Add"))
-  //         ],
-  //       ),
-  //     );
-  //   return ListView.builder(
-  //     itemCount: userPantry.length,
-  //     itemBuilder: (context, index) {
-  //       final ingredient = userPantry[index];
-  //       return ListTile(
-  //         title: Text(ingredient),
-  //         trailing: IconButton(onPressed: () {
-  //           userPantry.removeAt(index);
-  //           setState(() {
-  //             PantryPage = BuildPantryPage();
-  //           });
-  //         }, icon: Icon(Icons.delete)),
-  //       ); // ListTile
-  //     },
-  //   );
-  // }
-
-  // Container pageOne(GetRecipes GR) {
-  //   String searchKey = "page1" ;
-  //   return Container(
-  //     color: Colors.red[200],
-  //     alignment: Alignment.center,
-  //     child: Column(
-  //       children: [
-  //         Padding(
-  //           padding: const EdgeInsets.all(8.0),
-  //           child: SearchAnchor(
-  //               builder: (BuildContext context, SearchController controller) {
-  //             return SearchBar(
-  //               controller: controller,
-  //               padding: const MaterialStatePropertyAll<EdgeInsets>(
-  //                   EdgeInsets.symmetric(horizontal: 16.0)),
-  //               onTap: () {
-  //                 // controller.openView();
-  //
-  //               },
-  //               onChanged: (String s) {
-  //                 // controller.openView();
-  //                 setState(() {
-  //
-  //                 });
-  //               },
-  //               leading: const Icon(Icons.search),
-  //             );
-  //           }, suggestionsBuilder:
-  //                   (BuildContext context, SearchController controller) {
-  //             return List<ListTile>.generate(5, (int index) {
-  //               final String item = 'item $index';
-  //               return ListTile(
-  //                 title: Text(item),
-  //                 onTap: () {
-  //                   setState(() {
-  //                     controller.closeView(item);
-  //                   });
-  //                 },
-  //               );
-  //             });
-  //           }),
-  //         ),
-  //          Text(searchKey),
-  //        ListView(
-  //          children: GR.getListTiles(),
-  //        )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Container BuildFavouritesPage() {
-    return Container(
-      color: Colors.yellow[200],
-      alignment: Alignment.center,
-      child: const Text('Page 4'),
-    );
-  }
 }
 
 class MySearchDelegate extends SearchDelegate {
