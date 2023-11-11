@@ -383,6 +383,7 @@ class _RecipePageState extends State<RecipePage> {
           itemBuilder: (context, index) {
             return RecipeTile(
               recipeName: recipes[index].toMap()["Recipe_title"],
+              recipeImage: recipes[index].toMap()["image_path"],
               // recipeName: recipeData[index].toMap()["Recipe_title"],
               onTap: ()  {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -464,6 +465,7 @@ class MySearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         return RecipeTile(
               recipeName: recipesResults[index]["Recipe_title"],
+            recipeImage: recipes[index].toMap()["image_path"],
               // recipeName: recipeData[index].toMap()["Recipe_title"],
               onTap: ()  {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {

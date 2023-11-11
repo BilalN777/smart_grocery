@@ -25,22 +25,41 @@
 
 # print(f"File has been updated. New file is saved as '{output_file}'.")
 
+# import json
+
+# # Load the JSON data from a file
+# with open('recipes.json', 'r') as file:
+#     data = json.load(file)
+
+# # Check if the data is a list of recipes or a single recipe
+# # If the JSON is an array of objects, iterate through them
+# if isinstance(data, list):
+#     for recipe in data:
+#         # Add the isFavorite key with a default value of 0
+#         recipe['isFavorite'] = 0
+# else:
+#     # If the JSON is a single object, just add the key to that object
+#     data['isFavorite'] = 0
+
+# # Save the modified data back to the file
+# with open('recipes.json', 'w') as file:
+#     json.dump(data, file, indent=4)
+
 import json
 
-# Load the JSON data from a file
-with open('recipes.json', 'r') as file:
+# Load the JSON file
+file_path = 'recipes_with_images.json'  # Replace with the actual file path
+with open(file_path, 'r') as file:
     data = json.load(file)
 
-# Check if the data is a list of recipes or a single recipe
-# If the JSON is an array of objects, iterate through them
-if isinstance(data, list):
-    for recipe in data:
-        # Add the isFavorite key with a default value of 0
-        recipe['isFavorite'] = 0
-else:
-    # If the JSON is a single object, just add the key to that object
-    data['isFavorite'] = 0
+# Modify the 'image_name' field to add ".jpeg" at the end
+for recipe in data:
+    if 'image_name' in recipe:
+        recipe['image_name'] += ".jpeg"
 
-# Save the modified data back to the file
-with open('recipes.json', 'w') as file:
+# Save the modified data back to the JSON file
+with open(file_path, 'w') as file:
     json.dump(data, file, indent=4)
+
+print("Modification completed.")
+

@@ -141,7 +141,7 @@ class DatabaseHelper {
           // Assuming it's a JSON array or object
           columnRecipeId: recipe['recipe_id'],
           columnIsFavorite : recipe['isFavorite'],
-          columnImagePath : recipe['image_path']
+          columnImagePath : recipe['image_name']
         });
       }
     }

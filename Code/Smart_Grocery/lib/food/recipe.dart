@@ -68,7 +68,7 @@ class Recipe {
     return 'Recipe{Recipe_title: $Recipe_title, instructions: $instructions, '
         'ingredients: $ingredients, recipe_id: $recipe_id, '
         'Favorite: $isFavorite}'
-        'Image_Name: $image_name\n';
+        'image_name: $image_name\n';
   }
 
 }
