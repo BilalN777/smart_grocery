@@ -49,6 +49,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
+
                   return RecipeDetailPage(
                       title: databsse.listOfFavouriteRecipe[index]
                           .toMap()["Recipe_title"],
@@ -121,6 +122,7 @@ class MySearchDelegate extends SearchDelegate {
       itemCount: recipesResults.length,
       itemBuilder: (context, index) {
         return RecipeTile(
+
           recipeName: recipesResults[index]["Recipe_title"],
           // recipeName: recipeData[index].toMap()["Recipe_title"],
           onTap: () {
@@ -133,6 +135,7 @@ class MySearchDelegate extends SearchDelegate {
           },
           onPressed: () {},
         );
+
       },
     );
   }

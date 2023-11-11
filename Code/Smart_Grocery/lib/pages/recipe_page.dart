@@ -33,11 +33,13 @@ class _RecipePageState extends State<RecipePage> {
     );
   }
 
+
   Widget getRecipelist() {
     return Consumer<AppData>(builder: (context, database, child) {
       if (Provider.of<AppData>(context, listen: false).listOfRecipies.isEmpty)
         return Center(
           child: CircularProgressIndicator(), // The loading indicator
+
         );
       return ListView.builder(
         itemCount: database.listOfRecipies.length,
@@ -118,6 +120,7 @@ class MySearchDelegate extends SearchDelegate {
           },
           onPressed: () {},
         );
+
       },
     );
   }
