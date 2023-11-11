@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_grocery/appState.dart';
 import 'package:smart_grocery/models/store_tile.dart';
-import 'package:smart_grocery/store/store.dart';
-import 'package:smart_grocery/databaseHelper.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class StorePage extends StatefulWidget {
-
-
   StorePage({super.key});
 
   @override
@@ -16,23 +11,6 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-  List<Store> storeList = [] ; 
-
-  DatabaseHelper _dbHelper = DatabaseHelper.instance;
-
-  Future<void> initDatabase() async {
-      List <Store>  tempStores = await _dbHelper.getAllStores();
-      setState(() {
-        storeList = tempStores;
-      });
-      // print('Recipes form recipes page: ${recipes.length}');
-   }
-
-  @override
-  void initState(){
-    super.initState(); 
-    initDatabase();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +23,6 @@ class _StorePageState extends State<StorePage> {
   }
 
   Widget getListOfStore() {
-    // if (storeList.isEmpty)
     if (Provider.of<AppData>(context, listen: false).listOfStores.isEmpty)
       return Center(
         child: CircularProgressIndicator(), // The loading indicator
@@ -62,9 +39,5 @@ class _StorePageState extends State<StorePage> {
         }));
       },
     ); 
-    
-    
-    
-    
   }
 }
