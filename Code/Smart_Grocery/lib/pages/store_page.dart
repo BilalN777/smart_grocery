@@ -11,15 +11,14 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Stores"),
-      ) ,
-      body: getListOfStore() ,
-    ); 
+      ),
+      body: getListOfStore(),
+    );
   }
 
   Widget getListOfStore() {
@@ -30,14 +29,14 @@ class _StorePageState extends State<StorePage> {
     return Consumer<AppData>(
       builder: (context, database, child) {
         return ListView.builder(
-          itemCount: database.listOfStores.length,
-          itemBuilder: ((context, index) {
-            return StoreTile(
-              storeName: database.listOfStores[index].toMap()["store_name"],
-              address: database.listOfStores[index].toMap()["Address"],
-            );
-        }));
+            itemCount: database.listOfStores.length,
+            itemBuilder: ((context, index) {
+              return StoreTile(
+                storeName: database.listOfStores[index].name,
+                address: database.listOfStores[index].address,
+              );
+            }));
       },
-    ); 
+    );
   }
 }

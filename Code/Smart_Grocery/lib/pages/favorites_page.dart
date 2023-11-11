@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_grocery/appState.dart';
@@ -36,27 +35,27 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget getRecipelist() {
     return Consumer<AppData>(builder: (context, databsse, child) {
-      // if (databsse.listOfFavouriteRecipe.isEmpty)
-      //   return Center(
-      //     child: CircularProgressIndicator(), // The loading indicator
-      //   );
+      if (databsse.listOfFavouriteRecipe.isEmpty) {
+        return Center(
+          child: Text("Click on the heart icon to add recipes to favorites"),
+        );
+      }
       return ListView.builder(
           itemCount: databsse.listOfFavouriteRecipe.length,
           itemBuilder: (context, index) {
             return RecipeTile(
               recipeName:
-                  databsse.listOfFavouriteRecipe[index].toMap()["Recipe_title"],
+                  databsse.listOfFavouriteRecipe[index].Recipe_title,
+              recipeImage: databsse.listOfFavouriteRecipe[index].image_name,
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-
                   return RecipeDetailPage(
-                      title: databsse.listOfFavouriteRecipe[index]
-                          .toMap()["Recipe_title"],
-                      instruction: databsse.listOfFavouriteRecipe[index]
-                          .toMap()["instructions"],
-                      ingredient: databsse.listOfFavouriteRecipe[index]
-                          .toMap()["ingredients"]);
+                    title: databsse.listOfFavouriteRecipe[index].Recipe_title,
+                    instruction: databsse.listOfFavouriteRecipe[index].instructions,
+                    ingredient: databsse.listOfFavouriteRecipe[index].ingredients,
+                    recipeImage: databsse.listOfFavouriteRecipe[index].image_name,
+                  );
                 }));
               },
               onPressed: () {
@@ -81,11 +80,11 @@ class MySearchDelegate extends SearchDelegate {
   //   for(var recipeObj in recipes){
   //     listOfMap.a
   //   }
-  // //   recipesResults = recipes.where((map) {
-  // //   // Assuming you want a case-insensitive search
-  // //   String name = map['name']?.toLowerCase() ?? '';
-  // //   return name.contains(query.toLowerCase());
-  // // }).toList();
+  //   recipesResults = recipes.where((map) {
+  //   // Assuming you want a case-insensitive search
+  //   String name = map['name']?.toLowerCase() ?? '';
+  //   return name.contains(query.toLowerCase());
+  // }).toList();
   // )
 
   @override
@@ -122,20 +121,21 @@ class MySearchDelegate extends SearchDelegate {
       itemCount: recipesResults.length,
       itemBuilder: (context, index) {
         return RecipeTile(
-
           recipeName: recipesResults[index]["Recipe_title"],
+          recipeImage: recipesResults[index]["image_name"],
           // recipeName: recipeData[index].toMap()["Recipe_title"],
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return RecipeDetailPage(
-                  title: recipesResults[index]["Recipe_title"],
-                  instruction: recipesResults[index]["instructions"],
-                  ingredient: recipesResults[index]["ingredients"]);
+                title: recipesResults[index]["Recipe_title"],
+                instruction: recipesResults[index]["instructions"],
+                ingredient: recipesResults[index]["ingredients"],
+                recipeImage: "ackee-tacos-with-island-guacamole",
+              );
             }));
           },
           onPressed: () {},
         );
-
       },
     );
   }

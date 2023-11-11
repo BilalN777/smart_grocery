@@ -45,21 +45,68 @@
 # with open('recipes.json', 'w') as file:
 #     json.dump(data, file, indent=4)
 
+# import json
+
+# # Load the JSON file
+# file_path = 'recipes_with_images.json'  # Replace with the actual file path
+# with open(file_path, 'r') as file:
+#     data = json.load(file)
+
+# # Modify the 'image_name' field to add ".jpeg" at the end
+# for recipe in data:
+#     if 'image_name' in recipe:
+#         recipe['image_name'] += ".jpeg"
+
+# # Save the modified data back to the JSON file
+# with open(file_path, 'w') as file:
+#     json.dump(data, file, indent=4)
+
+# print("Modification completed.")
+
+
+# import json
+
+# # Load the JSON file
+# file_path = 'c:/Users/Umar/school/courses/5.fall_23/cs_440/440-Group-3-Fall-2023/Code/Smart_Grocery/assets/data/recipes_with_images.json'  # Replace with the actual file path
+# with open(file_path, 'r') as file:
+#     data = json.load(file)
+
+# # Modify the 'image_name' field to add ".jpeg" at the end
+# id = 0
+# for recipe in data:
+#     if 'recipe_id' in recipe:
+#         recipe['recipe_id'] = id
+#         id = id + 1
+
+# # Save the modified data back to the JSON file
+# with open(file_path, 'w') as file:
+#     json.dump(data, file, indent=4)
+
+# print("Modification completed.")
+
+
 import json
 
 # Load the JSON file
-file_path = 'recipes_with_images.json'  # Replace with the actual file path
+file_path = 'c:/Users/Umar/school/courses/5.fall_23/cs_440/440-Group-3-Fall-2023/Code/Smart_Grocery/assets/data/Grocery_Stores.json'  # Replace with the actual file path
 with open(file_path, 'r') as file:
     data = json.load(file)
 
 # Modify the 'image_name' field to add ".jpeg" at the end
-for recipe in data:
-    if 'image_name' in recipe:
-        recipe['image_name'] += ".jpeg"
+
+# for store in data:
+#     if 'store_name' in store:
+
+values = [item['store_name'] for item in data if 'store_name' in item]        
+
+unique_values = set(values)
+
+print('Number of unique values:', unique_values)
+
+
 
 # Save the modified data back to the JSON file
-with open(file_path, 'w') as file:
-    json.dump(data, file, indent=4)
+# with open(file_path, 'w') as file:
+#     json.dump(data, file, indent=4)
 
-print("Modification completed.")
-
+# print("Modification completed.")

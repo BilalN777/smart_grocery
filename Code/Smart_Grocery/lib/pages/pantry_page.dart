@@ -13,7 +13,6 @@ class PantryPage extends StatefulWidget {
 }
 
 class _PantryPageState extends State<PantryPage> {
-
   late TextEditingController tController;
 
   @override
@@ -96,8 +95,8 @@ class _PantryPageState extends State<PantryPage> {
           itemCount: database.listOfIngredients.length,
           itemBuilder: (context, index) {
             return IngredientTile(
-              name: database.listOfIngredients[index].toMap()["name"],
-              quantity: 1.0,
+              name: database.listOfIngredients[index].name,
+              quantity: database.listOfIngredients[index].qty_available,
               deleteIngrident: () => database.RemoveIngredientAt(index),
             );
           },

@@ -83,6 +83,7 @@ flutter:
     - assets/data/recipes.json
     - assets/data/users.csv
     - assets/data/recipes_with_images.json
+    - assets/google_fonts/Bree_Serif/
     - assets/data/Food_Images/cheesy-cabbage-gratin.jpeg
     - assets/data/Food_Images/scallop-rice-bowls-with-crunchy-spice-oil.jpeg
     - assets/data/Food_Images/olive-oil-apple-cake-with-spiced-sugar.jpeg

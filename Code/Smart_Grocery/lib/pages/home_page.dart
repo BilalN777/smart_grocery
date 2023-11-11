@@ -15,13 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   late Widget WidgetRecipePage;
-  late Widget HistoryPage ;
-  late Widget WidgetPantryPage ;
-  late Widget WidgetFavoritesPage ;
-
+  late Widget HistoryPage;
+  late Widget WidgetPantryPage;
+  late Widget WidgetFavoritesPage;
 
   // TODO : change to get user pantry
-  List<String> userPantry = ['ingredein', 'hello', 'bue'] ;
+  List<String> userPantry = ['ingredein', 'hello', 'bue'];
 
   @override
   void initState() {
@@ -122,7 +121,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
 
 class MySearchDelegate extends SearchDelegate {
@@ -158,11 +156,10 @@ class MySearchDelegate extends SearchDelegate {
     if (!_previousSearchKeywords.contains(query))
       _previousSearchKeywords.add(query);
     return Center(
-        child: Text (
-          query,
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold), // Text
-        )
-    );
+        child: Text(
+      query,
+      style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold), // Text
+    ));
   }
 
   @override
@@ -174,7 +171,7 @@ class MySearchDelegate extends SearchDelegate {
     }).toList();
 
     if (suggestions.length == 0 && query.length == 0)
-      suggestions = _previousSearchKeywords ;
+      suggestions = _previousSearchKeywords;
     return ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (context, index) {
@@ -183,7 +180,7 @@ class MySearchDelegate extends SearchDelegate {
           title: Text(suggestion),
           onTap: () {
             query = suggestion;
-            showResults(context) ;
+            showResults(context);
           },
         ); // ListTile
       },

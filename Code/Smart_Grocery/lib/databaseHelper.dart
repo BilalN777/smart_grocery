@@ -14,11 +14,9 @@ import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/store/store.dart';
 
 class DatabaseHelper {
-
   // setup of the database
   static final _dbName = 'smartGrocery.db';
   static final _dbVersion = 1;
-
 
   // add table vars here
   static final usersTable = 'users';
@@ -31,7 +29,6 @@ class DatabaseHelper {
   static final columnLocation = 'Location';
   static final columnPaymentInfo = 'PaymentINFO';
   static final columnFoodPreferences = 'FoodPreference';
-
 
   // recipes
   static final recipeTable = 'recipes';
@@ -57,8 +54,6 @@ class DatabaseHelper {
   static final columnStoreLocation = 'Location';
   static final columnStoreId = 'store_id';
 
-
-
   // Making it a Singleton
   DatabaseHelper._privateConstructor();
 
@@ -77,25 +72,21 @@ class DatabaseHelper {
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _dbName);
-    return await openDatabase(
-        path,
-        version: _dbVersion,
-        onCreate: _onCreate);
+    return await openDatabase(path, version: _dbVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
-
     // create the tables
     await db.execute('''
-           CREATE TABLE $recipeTable (
-             $columnRecipeId INTEGER PRIMARY KEY,
-             $columnRecipeTitle TEXT NOT NULL,
-             $columnInstructions LONGTEXT,
-             $columnIngredients LONGTEXT NOT NULL,
-             $columnIsFavorite INTEGER NOT NULL,
-             $columnImagePath TEXT
-           )
-           ''');
+            CREATE TABLE $recipeTable (
+              $columnRecipeId INTEGER PRIMARY KEY,
+              $columnRecipeTitle TEXT NOT NULL,
+              $columnInstructions LONGTEXT,
+              $columnIngredients LONGTEXT NOT NULL,
+              $columnIsFavorite INTEGER NOT NULL,
+              $columnImagePath TEXT NOT NULL
+            )
+            ''');
     await db.execute('''
           CREATE TABLE $ingredientsTable(
             $columnIngredientId INTEGER PRIMARY KEY,
@@ -115,19 +106,16 @@ class DatabaseHelper {
             )
             ''');
 
-
     bool recipesPopulated = await _isTablePopulated(db, recipeTable);
     bool ingredientsPopulated = await _isTablePopulated(db, ingredientsTable);
     bool storesPopulated = await _isTablePopulated(db, groceryStoresTable);
 
-    if(!recipesPopulated) {
+    if (!recipesPopulated) {
       // String recipesJsonString = await rootBundle.loadString(
       //     'assets/data/recipes.json');
 
-
-      String recipesJsonString = await rootBundle.loadString(
-          'assets/data/recipes_with_images.json');
-
+      String recipesJsonString =
+          await rootBundle.loadString('assets/data/recipes_with_images.json');
 
       // print(recipesJsonString);
       List<dynamic> recipes = json.decode(recipesJsonString);
@@ -140,13 +128,13 @@ class DatabaseHelper {
           columnIngredients: json.encode(recipe['ingredients']),
           // Assuming it's a JSON array or object
           columnRecipeId: recipe['recipe_id'],
-          columnIsFavorite : recipe['isFavorite'],
-          columnImagePath : recipe['image_name']
+          columnIsFavorite: recipe['isFavorite'],
+          columnImagePath: recipe['image_name']
         });
       }
     }
 
-    if(!ingredientsPopulated) {
+    if (!ingredientsPopulated) {
       String ingredientsJsonString = await rootBundle.loadString(
           'assets/data/ingredients_with_costs_and_zero_inventory.json');
       // print(ingredientsJsonString);
@@ -159,14 +147,13 @@ class DatabaseHelper {
           columnIngredientId: ing['ingredient_id'],
           columnIngredientCost: ing['cost'],
           columnIngredientQty: ing['inventory_qty'],
-
         });
       }
     }
 
-    if(!storesPopulated) {
-      String groceryStoresJsonString = await rootBundle.loadString(
-          'assets/data/Grocery_Stores.json');
+    if (!storesPopulated) {
+      String groceryStoresJsonString =
+          await rootBundle.loadString('assets/data/Grocery_Stores.json');
       // print(groceryStoresJsonString);
       List<dynamic> stores = json.decode(groceryStoresJsonString);
 
@@ -180,14 +167,12 @@ class DatabaseHelper {
         });
       }
     }
-
   }
-
 
   // RECIPE OPERATIONS
 
   // the updated version of inserting a recipe
-  Future<int> insertRecipe(Recipe recipe) async{
+  Future<int> insertRecipe(Recipe recipe) async {
     Database db = await instance.database;
     return await db.insert(recipeTable, recipe.toMap());
   }
@@ -211,7 +196,8 @@ class DatabaseHelper {
 
   Future<int> deleteRecipe(int id) async {
     Database db = await instance.database;
-    return await db.delete(recipeTable, where: '$columnRecipeId = ?', whereArgs: [id]);
+    return await db
+        .delete(recipeTable, where: '$columnRecipeId = ?', whereArgs: [id]);
   }
 
   Future<void> toggleFavoriteStatus(int recipeId, int isFavorite) async {
@@ -235,12 +221,9 @@ class DatabaseHelper {
     return maps.map((map) => Recipe.fromMap(map)).toList();
   }
 
-
-
-
   // INGREDIENT OPERATIONS
 
-  Future<int> insertIngredient(Ingredient ingredient) async{
+  Future<int> insertIngredient(Ingredient ingredient) async {
     Database db = await instance.database;
     return await db.insert(ingredientsTable, ingredient.toMap());
   }
@@ -257,18 +240,19 @@ class DatabaseHelper {
   Future<int> updateIngredient(Ingredient ingredient) async {
     Database db = await instance.database;
     return await db.update(ingredientsTable, ingredient.toMap(),
-        where: '$columnIngredientId = ?', whereArgs: [ingredient.ingredient_id]);
+        where: '$columnIngredientId = ?',
+        whereArgs: [ingredient.ingredient_id]);
   }
 
   Future<int> deleteIngredient(int id) async {
     Database db = await instance.database;
-    return await db.delete(ingredientsTable, where: '$columnIngredientId = ?', whereArgs: [id]);
+    return await db.delete(ingredientsTable,
+        where: '$columnIngredientId = ?', whereArgs: [id]);
   }
-
 
   // Store operations
 
-  Future<int> insertStore(Store store) async{
+  Future<int> insertStore(Store store) async {
     Database db = await instance.database;
     return await db.insert(groceryStoresTable, store.toMap());
   }
@@ -290,9 +274,9 @@ class DatabaseHelper {
 
   Future<int> deleteStore(int id) async {
     Database db = await instance.database;
-    return await db.delete(groceryStoresTable, where: '$columnStoreId = ?', whereArgs: [id]);
+    return await db.delete(groceryStoresTable,
+        where: '$columnStoreId = ?', whereArgs: [id]);
   }
-
 
   // Load the recipes
 
@@ -304,10 +288,8 @@ class DatabaseHelper {
     return data;
   }
 
-
   Future<bool> _isTablePopulated(Database db, String tableName) async {
     final data = await db.query(tableName, limit: 1);
     return data.isNotEmpty;
   }
-
 }

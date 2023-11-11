@@ -33,28 +33,26 @@ class _RecipePageState extends State<RecipePage> {
     );
   }
 
-
   Widget getRecipelist() {
     return Consumer<AppData>(builder: (context, database, child) {
       if (Provider.of<AppData>(context, listen: false).listOfRecipies.isEmpty)
         return Center(
           child: CircularProgressIndicator(), // The loading indicator
-
         );
       return ListView.builder(
         itemCount: database.listOfRecipies.length,
         itemBuilder: (context, index) {
           return RecipeTile(
-            recipeName: database.listOfRecipies[index].toMap()["Recipe_title"],
+            recipeName: database.listOfRecipies[index].Recipe_title,
+            recipeImage: database.listOfRecipies[index].image_name,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return RecipeDetailPage(
-                    title:
-                        database.listOfRecipies[index].toMap()["Recipe_title"],
-                    instruction:
-                        database.listOfRecipies[index].toMap()["instructions"],
-                    ingredient:
-                        database.listOfRecipies[index].toMap()["ingredients"]);
+                  title: database.listOfRecipies[index].Recipe_title,
+                  instruction: database.listOfRecipies[index].instructions,
+                  ingredient: database.listOfRecipies[index].ingredients,
+                  recipeImage: database.listOfRecipies[index].image_name,
+                );
               }));
             },
             onPressed: () {
@@ -110,17 +108,19 @@ class MySearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         return RecipeTile(
           recipeName: recipesResults[index]["Recipe_title"],
+          recipeImage: recipesResults[index]["image_name"],
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return RecipeDetailPage(
-                  title: recipesResults[index]["Recipe_title"],
-                  instruction: recipesResults[index]["instructions"],
-                  ingredient: recipesResults[index]["ingredients"]);
+                title: recipesResults[index]["Recipe_title"],
+                instruction: recipesResults[index]["instructions"],
+                ingredient: recipesResults[index]["ingredients"],
+                recipeImage: recipesResults[index]["image_name"],
+              );
             }));
           },
           onPressed: () {},
         );
-
       },
     );
   }

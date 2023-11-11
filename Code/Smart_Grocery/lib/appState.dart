@@ -19,7 +19,12 @@ class AppData extends ChangeNotifier {
     // Load the recipes from the database in to local varialbe
     listOfRecipies = await _dbHelper.getAllRecipes();
     notifyListeners();
-    print('Recipes for recipes page: ${listOfRecipies.length}');
+
+    for (int i = 0; i < listOfRecipies.length; i++) {
+      if (listOfRecipies[i].image_name == null)
+        print('The image at index $i is null.'); 
+    }
+    print('Recipes for recipes page: ${listOfRecipies[7]}');
 
     // Load the ingredients from the database in to local varialbe
     listOfIngredients = await _dbHelper.getAllIngredients();
@@ -56,6 +61,6 @@ class AppData extends ChangeNotifier {
 
   RemoveFavourties(int index) {
     listOfFavouriteRecipe.remove(listOfFavouriteRecipe[index]);
-    notifyListeners(); 
+    notifyListeners();
   }
 }
