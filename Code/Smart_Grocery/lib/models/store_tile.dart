@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StoreTile extends StatelessWidget {
-  final String storeName ; 
-  final String address; 
+  final String storeName;
+  final String address;
   const StoreTile({super.key, required this.storeName, required this.address});
 
   @override

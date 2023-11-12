@@ -1,6 +1,6 @@
 class Store {
-  String? name;
-  String? address;
+  String name;
+  String address;
   String? zipcode;
   String? location;
   int? id;
@@ -11,19 +11,17 @@ class Store {
       'store_name': name,
       'Address': address,
       'Zip': zipcode,
-      'Location' : location,
+      'Location': location,
       'store_id': id,
     };
   }
 
-  Store({
-    required this.name,
-    required this.address,
-    required this.zipcode,
-    required this.location,
-    this.id
-  });
-
+  Store(
+      {required this.name,
+      required this.address,
+      required this.zipcode,
+      required this.location,
+      this.id});
 
   factory Store.fromMap(Map<String, dynamic> map) {
     return Store(
@@ -38,6 +36,4 @@ class Store {
   String toString() {
     return 'Store{Name: $name, address: $address, zipcode: $zipcode, location: $location, id: $id}\n';
   }
-
-
 }
