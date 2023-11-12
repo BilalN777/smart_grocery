@@ -6,7 +6,8 @@ import 'package:smart_grocery/models/recipe_tile.dart';
 import 'package:smart_grocery/pages/recipe_details_page.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({super.key});
+  final void Function() onPressed;
+  const FavoritesPage({super.key, required this.onPressed});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -44,17 +45,20 @@ class _FavoritesPageState extends State<FavoritesPage> {
           itemCount: databsse.listOfFavouriteRecipe.length,
           itemBuilder: (context, index) {
             return RecipeTile(
-              recipeName:
-                  databsse.listOfFavouriteRecipe[index].Recipe_title,
+              recipeName: databsse.listOfFavouriteRecipe[index].Recipe_title,
               recipeImage: databsse.listOfFavouriteRecipe[index].image_name,
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return RecipeDetailPage(
                     title: databsse.listOfFavouriteRecipe[index].Recipe_title,
-                    instruction: databsse.listOfFavouriteRecipe[index].instructions,
-                    ingredient: databsse.listOfFavouriteRecipe[index].ingredients,
-                    recipeImage: databsse.listOfFavouriteRecipe[index].image_name,
+                    instruction:
+                        databsse.listOfFavouriteRecipe[index].instructions,
+                    ingredient:
+                        databsse.listOfFavouriteRecipe[index].ingredients,
+                    recipeImage:
+                        databsse.listOfFavouriteRecipe[index].image_name,
+                    onPressed: widget.onPressed,
                   );
                 }));
               },
@@ -130,7 +134,7 @@ class MySearchDelegate extends SearchDelegate {
                 title: recipesResults[index]["Recipe_title"],
                 instruction: recipesResults[index]["instructions"],
                 ingredient: recipesResults[index]["ingredients"],
-                recipeImage: "ackee-tacos-with-island-guacamole",
+                recipeImage: "ackee-tacos-with-island-guacamole", onPressed: () {  },
               );
             }));
           },

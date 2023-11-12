@@ -29,3 +29,8 @@ samples, guidance on mobile development, and a full API reference.
   - ✅ ingredient crud operations
   - ✅ test database pulling
   - ✅ focus on just being able to add
+- make a store page
+- make a external link to store page to maps
+- ✅ add check boxes to recipe_detial_page
+- implement the store button on recipe_details_page so that it redirect
+  to store page with all the unchecked items in the cart list

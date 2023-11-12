@@ -22,13 +22,24 @@ class _HomePageState extends State<HomePage> {
   // TODO : change to get user pantry
   List<String> userPantry = ['ingredein', 'hello', 'bue'];
 
+  void onPressed() {
+    Navigator.of(context).pop();
+    setState(() {
+      currentPageIndex = 1;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    WidgetRecipePage = RecipePage();
+    WidgetRecipePage = RecipePage(
+      onPressed: onPressed,
+    );
     HistoryPage = StorePage();
     WidgetPantryPage = PantryPage();
-    WidgetFavoritesPage = FavoritesPage();
+    WidgetFavoritesPage = FavoritesPage(
+      onPressed: onPressed,
+    );
   }
 
   late Future<List<Map<String, dynamic>>> listOfRecipies;

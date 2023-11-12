@@ -6,7 +6,8 @@ import 'package:smart_grocery/models/recipe_tile.dart';
 import 'package:smart_grocery/pages/recipe_details_page.dart';
 
 class RecipePage extends StatefulWidget {
-  const RecipePage({super.key});
+  final void Function() onPressed;
+  const RecipePage({super.key, required this.onPressed});
 
   @override
   State<RecipePage> createState() => _RecipePageState();
@@ -52,6 +53,7 @@ class _RecipePageState extends State<RecipePage> {
                   instruction: database.listOfRecipies[index].instructions,
                   ingredient: database.listOfRecipies[index].ingredients,
                   recipeImage: database.listOfRecipies[index].image_name,
+                  onPressed: widget.onPressed,
                 );
               }));
             },
@@ -115,7 +117,7 @@ class MySearchDelegate extends SearchDelegate {
                 title: recipesResults[index]["Recipe_title"],
                 instruction: recipesResults[index]["instructions"],
                 ingredient: recipesResults[index]["ingredients"],
-                recipeImage: recipesResults[index]["image_name"],
+                recipeImage: recipesResults[index]["image_name"], onPressed: () {},
               );
             }));
           },
