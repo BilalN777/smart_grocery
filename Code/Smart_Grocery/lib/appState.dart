@@ -48,7 +48,8 @@ class AppData extends ChangeNotifier {
   }
 
   AddIngredient(Ingredient item) {
-    listOfIngredients.add(item);
+    // listOfIngredients.add(item);
+    listOfIngredients.insert(0, item);
     notifyListeners();
   }
 
