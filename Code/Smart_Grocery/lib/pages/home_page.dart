@@ -74,24 +74,33 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('GOTO'),
+              leading: const Icon(Icons.house_outlined),
+              title: const Text('Recipes'),
               onTap: () {
                 Navigator.pop(context);
+                setState(() {
+                  currentPageIndex = 0;
+                });
               },
             ),
             ListTile(
               leading: const Icon(Icons.explore),
-              title: const Text('EXPLORE'),
+              title: const Text('Stores'),
               onTap: () {
                 Navigator.pop(context);
+                setState(() {
+                  currentPageIndex = 1;
+                });
               },
             ),
             ListTile(
-              leading: const Icon(Icons.remove_red_eye_rounded),
-              title: const Text('LOOK AROUND'),
+              leading: const Icon(Icons.shelves),
+              title: const Text('Pantry'),
               onTap: () {
                 Navigator.pop(context);
+                setState(() {
+                  currentPageIndex = 2;
+                });
               },
             ),
             ListTile(

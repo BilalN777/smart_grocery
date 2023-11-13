@@ -5,10 +5,10 @@ import 'package:smart_grocery/food/recipe.dart';
 import 'package:smart_grocery/store/store.dart';
 
 class AppData extends ChangeNotifier {
-  List<Recipe> listOfRecipies = [];
+  List<Recipe> listOfRecipes = [];
   List<Ingredient> listOfIngredients = [];
   List<Store> listOfStores = [];
-  List<Recipe> listOfFavouriteRecipe = [];
+  List<Recipe> listOffavoriteRecipe = [];
   DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   AppData() {
@@ -16,22 +16,22 @@ class AppData extends ChangeNotifier {
   }
 
   Future<void> initDatabase() async {
-    // Load the recipes from the database in to local varialbe
-    listOfRecipies = await _dbHelper.getAllRecipes();
+    // Load the recipes from the database in to local variable
+    listOfRecipes = await _dbHelper.getAllRecipes();
     notifyListeners();
 
-    for (int i = 0; i < listOfRecipies.length; i++) {
-      if (listOfRecipies[i].image_name == null)
+    for (int i = 0; i < listOfRecipes.length; i++) {
+      if (listOfRecipes[i].image_name == null)
         print('The image at index $i is null.'); 
     }
-    print('Recipes for recipes page: ${listOfRecipies[7]}');
+    print('Recipes for recipes page: ${listOfRecipes[7]}');
 
-    // Load the ingredients from the database in to local varialbe
+    // Load the ingredients from the database in to local variable
     listOfIngredients = await _dbHelper.getAllIngredients();
     notifyListeners();
     print('Ingredients for Pantry page: ${listOfIngredients.length}');
 
-    // Load the Store from the database in to local varialbe
+    // Load the Store from the database in to local variable
     listOfStores = await _dbHelper.getAllStores();
     notifyListeners();
     print('Stores for store page: ${listOfStores.length}');
@@ -55,13 +55,13 @@ class AppData extends ChangeNotifier {
 
   AddFavorites(bool value, int index) {
     if (value) {
-      listOfFavouriteRecipe.add(listOfRecipies[index]);
+      listOffavoriteRecipe.add(listOfRecipes[index]);
     }
     notifyListeners();
   }
 
-  RemoveFavourties(int index) {
-    listOfFavouriteRecipe.remove(listOfFavouriteRecipe[index]);
+  RemoveFavorites(int index) {
+    listOffavoriteRecipe.remove(listOffavoriteRecipe[index]);
     notifyListeners();
   }
 }

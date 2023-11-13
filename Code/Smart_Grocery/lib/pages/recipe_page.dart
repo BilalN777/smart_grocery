@@ -19,13 +19,13 @@ class _RecipePageState extends State<RecipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Recieps"), actions: [
+      appBar: AppBar(title: Text("Recipes"), actions: [
         Consumer<AppData>(builder: (context, database, child) {
           return IconButton(
               onPressed: () {
                 showSearch(
                     context: context,
-                    delegate: MySearchDelegate(database.listOfRecipies));
+                    delegate: MySearchDelegate(database.listOfRecipes));
               },
               icon: Icon(Icons.search));
         })
@@ -36,23 +36,23 @@ class _RecipePageState extends State<RecipePage> {
 
   Widget getRecipelist() {
     return Consumer<AppData>(builder: (context, database, child) {
-      if (Provider.of<AppData>(context, listen: false).listOfRecipies.isEmpty)
+      if (Provider.of<AppData>(context, listen: false).listOfRecipes.isEmpty)
         return Center(
           child: CircularProgressIndicator(), // The loading indicator
         );
       return ListView.builder(
-        itemCount: database.listOfRecipies.length,
+        itemCount: database.listOfRecipes.length,
         itemBuilder: (context, index) {
           return RecipeTile(
-            recipeName: database.listOfRecipies[index].Recipe_title,
-            recipeImage: database.listOfRecipies[index].image_name,
+            recipeName: database.listOfRecipes[index].Recipe_title,
+            recipeImage: database.listOfRecipes[index].image_name,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return RecipeDetailPage(
-                  title: database.listOfRecipies[index].Recipe_title,
-                  instruction: database.listOfRecipies[index].instructions,
-                  ingredient: database.listOfRecipies[index].ingredients,
-                  recipeImage: database.listOfRecipies[index].image_name,
+                  title: database.listOfRecipes[index].Recipe_title,
+                  instruction: database.listOfRecipes[index].instructions,
+                  ingredient: database.listOfRecipes[index].ingredients,
+                  recipeImage: database.listOfRecipes[index].image_name,
                   onPressed: widget.onPressed,
                 );
               }));

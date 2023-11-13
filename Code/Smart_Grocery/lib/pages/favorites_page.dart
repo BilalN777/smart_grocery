@@ -19,14 +19,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Favourites"), actions: [
+      appBar: AppBar(title: Text("favorites"), actions: [
         IconButton(
             onPressed: () {
               showSearch(
                   context: context,
                   delegate: MySearchDelegate(
                       Provider.of<AppData>(context, listen: false)
-                          .listOfFavouriteRecipe));
+                          .listOffavoriteRecipe));
             },
             icon: Icon(Icons.search))
       ]),
@@ -36,34 +36,34 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget getRecipelist() {
     return Consumer<AppData>(builder: (context, databsse, child) {
-      if (databsse.listOfFavouriteRecipe.isEmpty) {
+      if (databsse.listOffavoriteRecipe.isEmpty) {
         return Center(
           child: Text("Click on the heart icon to add recipes to favorites"),
         );
       }
       return ListView.builder(
-          itemCount: databsse.listOfFavouriteRecipe.length,
+          itemCount: databsse.listOffavoriteRecipe.length,
           itemBuilder: (context, index) {
             return RecipeTile(
-              recipeName: databsse.listOfFavouriteRecipe[index].Recipe_title,
-              recipeImage: databsse.listOfFavouriteRecipe[index].image_name,
+              recipeName: databsse.listOffavoriteRecipe[index].Recipe_title,
+              recipeImage: databsse.listOffavoriteRecipe[index].image_name,
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return RecipeDetailPage(
-                    title: databsse.listOfFavouriteRecipe[index].Recipe_title,
+                    title: databsse.listOffavoriteRecipe[index].Recipe_title,
                     instruction:
-                        databsse.listOfFavouriteRecipe[index].instructions,
+                        databsse.listOffavoriteRecipe[index].instructions,
                     ingredient:
-                        databsse.listOfFavouriteRecipe[index].ingredients,
+                        databsse.listOffavoriteRecipe[index].ingredients,
                     recipeImage:
-                        databsse.listOfFavouriteRecipe[index].image_name,
+                        databsse.listOffavoriteRecipe[index].image_name,
                     onPressed: widget.onPressed,
                   );
                 }));
               },
               onPressed: () {
-                databsse.RemoveFavourties(index);
+                databsse.RemoveFavorites(index);
               },
             );
           });
