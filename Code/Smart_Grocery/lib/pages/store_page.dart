@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_grocery/appState.dart';
 import 'package:smart_grocery/models/store_tile.dart';
+import 'package:smart_grocery/pages/store_details_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StorePage extends StatefulWidget {
@@ -36,7 +37,14 @@ class _StorePageState extends State<StorePage> {
                 storeName: database.listOfStores[index].name,
                 address: database.listOfStores[index].address,
                 onTap: () {
-                  _launchMapsUrl(database.listOfStores[index].address);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return StoreDetailsPage(
+                        onPressed: () => _launchMapsUrl(
+                            database.listOfStores[index].address),
+                        store: database.listOfStores[index]);
+                  }));
+                  // _launchMapsUrl(database.listOfStores[index].address);
                 },
               );
             }));
@@ -46,7 +54,8 @@ class _StorePageState extends State<StorePage> {
 }
 
 Future<void> _launchMapsUrl(String address) async {
-  final Uri googleMapsUrl = Uri.parse('https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}');
+  final Uri googleMapsUrl = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}');
 
   if (await canLaunchUrl(googleMapsUrl)) {
     await launchUrl(googleMapsUrl);
@@ -54,4 +63,3 @@ Future<void> _launchMapsUrl(String address) async {
     throw 'Could not launch $googleMapsUrl';
   }
 }
-

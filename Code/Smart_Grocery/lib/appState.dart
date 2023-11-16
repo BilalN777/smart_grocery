@@ -20,10 +20,10 @@ class AppData extends ChangeNotifier {
     listOfRecipes = await _dbHelper.getAllRecipes();
     notifyListeners();
 
-    for (int i = 0; i < listOfRecipes.length; i++) {
-      if (listOfRecipes[i].image_name == null)
-        print('The image at index $i is null.'); 
-    }
+    // for (int i = 0; i < listOfRecipes.length; i++) {
+    //   if (listOfRecipes[i].image_name == null)
+    //     print('The image at index $i is null.'); 
+    // }
     print('Recipes for recipes page: ${listOfRecipes[7]}');
 
     // Load the ingredients from the database in to local variable
