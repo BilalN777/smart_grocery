@@ -22,7 +22,7 @@ class AppData extends ChangeNotifier {
 
     // for (int i = 0; i < listOfRecipes.length; i++) {
     //   if (listOfRecipes[i].image_name == null)
-    //     print('The image at index $i is null.'); 
+    //     print('The image at index $i is null.');
     // }
     print('Recipes for recipes page: ${listOfRecipes[7]}');
 
@@ -54,13 +54,20 @@ class AppData extends ChangeNotifier {
   }
 
   AddFavorites(bool value, int index) {
-    if (value) {
+    if (value && !listOffavoriteRecipe.contains(listOfRecipes[index])) {
       listOffavoriteRecipe.add(listOfRecipes[index]);
+      listOfRecipes[index].isFavorite = 1;
+    } else {
+      RemoveFavorites(listOffavoriteRecipe.indexOf(listOfRecipes[index]));
     }
     notifyListeners();
   }
 
   RemoveFavorites(int index) {
+    print(
+        'index in recipe is ${listOfRecipes.indexOf(listOffavoriteRecipe[index])}');
+    listOfRecipes[listOfRecipes.indexOf(listOffavoriteRecipe[index])]
+        .isFavorite = 0;
     listOffavoriteRecipe.remove(listOffavoriteRecipe[index]);
     notifyListeners();
   }

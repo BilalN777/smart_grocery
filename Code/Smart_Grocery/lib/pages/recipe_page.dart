@@ -44,8 +44,9 @@ class _RecipePageState extends State<RecipePage> {
         itemCount: database.listOfRecipes.length,
         itemBuilder: (context, index) {
           return RecipeTile(
-            recipeName: database.listOfRecipes[index].Recipe_title,
-            recipeImage: database.listOfRecipes[index].image_name,
+            // recipeName: database.listOfRecipes[index].Recipe_title,
+            // recipeImage: database.listOfRecipes[index].image_name,
+            recipe: database.listOfRecipes[index],
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return RecipeDetailPage(
@@ -109,15 +110,17 @@ class MySearchDelegate extends SearchDelegate {
       itemCount: recipesResults.length,
       itemBuilder: (context, index) {
         return RecipeTile(
-          recipeName: recipesResults[index]["Recipe_title"],
-          recipeImage: recipesResults[index]["image_name"],
+          recipe: Recipe.fromMap(recipesResults[index]),
+          // recipeName: recipesResults[index]["Recipe_title"],
+          // recipeImage: recipesResults[index]["image_name"],
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return RecipeDetailPage(
                 title: recipesResults[index]["Recipe_title"],
                 instruction: recipesResults[index]["instructions"],
                 ingredient: recipesResults[index]["ingredients"],
-                recipeImage: recipesResults[index]["image_name"], onPressed: () {},
+                recipeImage: recipesResults[index]["image_name"],
+                onPressed: () {},
               );
             }));
           },

@@ -45,8 +45,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
           itemCount: databsse.listOffavoriteRecipe.length,
           itemBuilder: (context, index) {
             return RecipeTile(
-              recipeName: databsse.listOffavoriteRecipe[index].Recipe_title,
-              recipeImage: databsse.listOffavoriteRecipe[index].image_name,
+            recipe: databsse.listOffavoriteRecipe[index],
+              // recipeName: databsse.listOffavoriteRecipe[index].Recipe_title,
+              // recipeImage: databsse.listOffavoriteRecipe[index].image_name,
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -125,8 +126,9 @@ class MySearchDelegate extends SearchDelegate {
       itemCount: recipesResults.length,
       itemBuilder: (context, index) {
         return RecipeTile(
-          recipeName: recipesResults[index]["Recipe_title"],
-          recipeImage: recipesResults[index]["image_name"],
+          recipe: Recipe.fromMap( recipesResults[index]),
+          // recipeName: recipesResults[index]["Recipe_title"],
+          // recipeImage: recipesResults[index]["image_name"],
           // recipeName: recipeData[index].toMap()["Recipe_title"],
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {

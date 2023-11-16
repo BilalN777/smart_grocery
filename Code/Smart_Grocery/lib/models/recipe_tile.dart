@@ -1,40 +1,53 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/food/recipe.dart';
 
 String path = 'assets/data/Food_Images/';
 String extension = '.jpeg';
 
-class RecipeTile extends StatelessWidget {
-  final String recipeName;
-  final String recipeImage;
-  final random = Random();
-  final List icons = [
-    Icons.restaurant_rounded,
-    Icons.restaurant_menu,
-    Icons.table_restaurant_outlined
-  ];
+class RecipeTile extends StatefulWidget {
+  final Recipe recipe;
   final void Function() onTap;
   final void Function() onPressed;
   RecipeTile(
       {super.key,
-      required this.recipeName,
-      required this.recipeImage,
       required this.onTap,
-      required this.onPressed});
+      required this.onPressed,
+      required this.recipe});
+
+  @override
+  State<RecipeTile> createState() => _RecipeTileState();
+}
+
+class _RecipeTileState extends State<RecipeTile> {
+  late Color c;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(recipeName),
+      title: Text(widget.recipe.Recipe_title),
       leading: Hero(
-          tag: recipeImage + " hero",
-          child: Image(image: AssetImage(path + recipeImage + extension))),
-      onTap: onTap,
+          tag: widget.recipe.image_name + " hero",
+          child: Image(
+              image: AssetImage(path + widget.recipe.image_name + extension))),
+      onTap: widget.onTap,
       trailing: IconButton(
         icon: Icon(Icons.favorite),
-        onPressed: onPressed,
+        onPressed: widget.onPressed,
+        color: getColor(),
       ),
     );
+  }
+
+  Color getColor() {
+    setState(() {
+      c = Colors.grey;
+      // print("favourite = ${widget.recipe.isFavorite}");
+      if (widget.recipe.isFavorite == 1) {
+        c = Colors.redAccent;
+      }
+    });
+    return c;
   }
 }
