@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_grocery/store/store.dart';
 
+String path = 'assets/data/grocery_store_icons/';
+
+
 class StoreDetailsPage extends StatelessWidget {
   final Store store;
   final Function() onPressed;
@@ -14,9 +17,12 @@ class StoreDetailsPage extends StatelessWidget {
         title: Text(store.name),
       ),
       body: Center(
-        child: Text("store api with the list of uncheck items from recipe"),
+        child: Text("store api with the list of ingredient items from recipe"),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: onPressed,child: Icon(Icons.directions),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: onPressed,
+        child: Image(
+            image: AssetImage(path + store.image_path)),),
     );
   }
 }

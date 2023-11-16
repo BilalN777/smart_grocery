@@ -1,18 +1,20 @@
 class Store {
-  String name;
   String address;
-  String? zipcode;
-  String? location;
+  String zipcode;
   int? id;
+  String location;
+  String name;
+  String image_path;
 
   // string has to match json
   Map<String, dynamic> toMap() {
     return {
-      'store_name': name,
       'Address': address,
       'Zip': zipcode,
       'Location': location,
       'store_id': id,
+      'store_name': name,
+      'image_path': image_path
     };
   }
 
@@ -21,7 +23,8 @@ class Store {
       required this.address,
       required this.zipcode,
       required this.location,
-      this.id});
+      this.id,
+      required this.image_path});
 
   factory Store.fromMap(Map<String, dynamic> map) {
     return Store(
@@ -30,10 +33,16 @@ class Store {
       zipcode: map['Zip'],
       location: map['Location'],
       id: map['store_id'],
+      image_path: map['image_path'],
     );
   }
 
   String toString() {
-    return 'Store{Name: $name, address: $address, zipcode: $zipcode, location: $location, id: $id}\n';
+    return 'Store{Name: $name, '
+        'address: $address, '
+        'zipcode: $zipcode, '
+        'location: $location, '
+        'id: $id,'
+        'image_path: $image_path}\n';
   }
 }

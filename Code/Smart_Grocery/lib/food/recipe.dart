@@ -35,15 +35,7 @@ class Recipe {
       this.isFavorite = 0,
       required this.image_name});
 
-  // factory Recipe.fromMap(Map<String, dynamic> map){
-  //   return Recipe(
-  //       Recipe_title: map['Recipe_title'],
-  //       instructions: map['instructions'],
-  //       ingredients: map['ingredients'],
-  //       recipe_id: map['recipe_id'],
 
-  //   );
-  // }
 
   factory Recipe.fromMap(Map<String, dynamic> map) {
     return Recipe(
@@ -53,7 +45,7 @@ class Recipe {
         ingredients: List<String>.from(json
             .decode(map['ingredients'])), // Decoding the JSON string to a List
         recipe_id: map['recipe_id'],
-        isFavorite: 0,
+        isFavorite: 0, //  TODO try changing to map ['isFavorite'] to see if it works
         image_name: map['image_name']);
   }
 

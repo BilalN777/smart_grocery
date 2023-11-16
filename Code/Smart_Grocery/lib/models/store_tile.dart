@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:smart_grocery/store/store.dart';
 
-class StoreTile extends StatelessWidget {
-  final String storeName;
-  final String address;
+String path = 'assets/data/grocery_store_icons/';
+
+
+class StoreTile extends StatefulWidget {
+  final Store store;
   final void Function() onTap;
-  StoreTile({super.key,
-    required this.storeName,
-    required this.address,
-    required this.onTap,});
+  StoreTile(
+      {super.key,
+        required this.onTap,
+        required this.store,});
 
+  @override
+  State<StoreTile> createState() => _StoreTileState();
+}
+
+class _StoreTileState extends State<StoreTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.storefront_sharp),
-      title: Text(storeName),
-      subtitle: Text(address),
-      onTap: onTap,
+      leading: Image(image: AssetImage(path + widget.store.image_path)),
+      title: Text(widget.store.name),
+      subtitle: Text(widget.store.address),
+      onTap: widget.onTap,
     );
   }
 }

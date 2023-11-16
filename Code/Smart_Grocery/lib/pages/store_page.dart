@@ -34,8 +34,9 @@ class _StorePageState extends State<StorePage> {
             itemCount: database.listOfStores.length,
             itemBuilder: ((context, index) {
               return StoreTile(
-                storeName: database.listOfStores[index].name,
-                address: database.listOfStores[index].address,
+                // storeName: database.listOfStores[index].name,
+                // address: database.listOfStores[index].address,
+                store: database.listOfStores[index],
                 onTap: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {

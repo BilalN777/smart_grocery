@@ -53,6 +53,7 @@ class DatabaseHelper {
   static final columnStoreZip = 'Zip';
   static final columnStoreLocation = 'Location';
   static final columnStoreId = 'store_id';
+  static final columnStoreImage = 'image_path';
 
   // Making it a Singleton
   DatabaseHelper._privateConstructor();
@@ -102,7 +103,8 @@ class DatabaseHelper {
             $columnStoreName LONGTEXT NOT NULL,
             $columnStoreAddress LONGTEXT NOT NULL,
             $columnStoreZip TEXT,
-            $columnStoreLocation LONGTEXT NOT NULL
+            $columnStoreLocation LONGTEXT NOT NULL,
+            $columnStoreImage TEXT NOT NULL
             )
             ''');
 
@@ -111,13 +113,12 @@ class DatabaseHelper {
     bool storesPopulated = await _isTablePopulated(db, groceryStoresTable);
 
     if (!recipesPopulated) {
-      // String recipesJsonString = await rootBundle.loadString(
-      //     'assets/data/recipes.json');
 
       String recipesJsonString =
           await rootBundle.loadString('assets/data/recipes_with_images.json');
 
       // print(recipesJsonString);
+
       List<dynamic> recipes = json.decode(recipesJsonString);
       // Insert recipes into the database
       for (var recipe in recipes) {
@@ -153,7 +154,7 @@ class DatabaseHelper {
 
     if (!storesPopulated) {
       String groceryStoresJsonString =
-          await rootBundle.loadString('assets/data/Grocery_Stores.json');
+          await rootBundle.loadString('assets/data/storeswithPhotos.json');
       // print(groceryStoresJsonString);
       List<dynamic> stores = json.decode(groceryStoresJsonString);
 
@@ -164,6 +165,7 @@ class DatabaseHelper {
           columnStoreZip: store['Zip'],
           columnStoreLocation: store['Location'],
           columnStoreId: store['store_id'],
+          columnStoreImage: store['image_path'],
         });
       }
     }
