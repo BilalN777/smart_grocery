@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_grocery/appState.dart';
 import 'package:smart_grocery/food/ingredient.dart';
@@ -13,17 +14,19 @@ class PantryPage extends StatefulWidget {
 }
 
 class _PantryPageState extends State<PantryPage> {
-  late TextEditingController tController;
+  late TextEditingController tController, tController2;
 
   @override
   void initState() {
     super.initState();
     tController = TextEditingController();
+    tController2 = TextEditingController();
   }
 
   @override
   void dispose() {
     tController.dispose();
+    tController2.dispose();
     super.dispose();
   }
 
@@ -107,6 +110,7 @@ class _PantryPageState extends State<PantryPage> {
 
   IngredientsAddPage() {
     String newIngredient = "";
+    String quantity = "";
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Ingredient"),
@@ -121,11 +125,27 @@ class _PantryPageState extends State<PantryPage> {
               children: [
                 TextField(
                   decoration: InputDecoration(
+                      labelText: "Ingredient",
                       contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)),
                   autofocus: true,
                   controller: tController,
                   onChanged: (text) {
                     newIngredient = text;
+                  },
+                ),
+                TextField(
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
+                  ],
+                  decoration: InputDecoration(
+                      labelText: "Quantity",
+                      contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)),
+                  // autofocus: true,
+                  controller: tController2,
+                  onChanged: (text) {
+                    quantity = text;
+                    print('quantity on change "$quantity"');
                   },
                   onSubmitted: (text) {
                     if (text.isNotEmpty) {
@@ -133,8 +153,9 @@ class _PantryPageState extends State<PantryPage> {
                           name: newIngredient,
                           ingredient_id: -1,
                           cost: 0.0,
-                          qty_available: 1.0));
+                          qty_available: double.parse(quantity)));
                       tController.clear();
+                      tController2.clear();
                       Navigator.pop(context);
                     }
                   },
@@ -144,13 +165,20 @@ class _PantryPageState extends State<PantryPage> {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      if (newIngredient.isNotEmpty)
+                      if (newIngredient.isNotEmpty && quantity.isNotEmpty) {
+                        print(
+                            'adding "$newIngredient" with quantity "$quantity"');
                         database.AddIngredient(Ingredient(
                             name: newIngredient,
                             ingredient_id: -1,
                             cost: 0.0,
-                            qty_available: 1.0));
+                            qty_available: double.parse(quantity)));
+                      } else {
+                        print(
+                            'cannot add "$newIngredient" with quantity "$quantity"');
+                      }
                       tController.clear();
+                      tController2.clear();
                       Navigator.pop(context);
                     },
                     child: Text("Add"))
