@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smart_grocery/pages/login_page.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
 import 'package:smart_grocery/pages/favorites_page.dart';
+import 'package:smart_grocery/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,12 +17,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   late Widget WidgetRecipePage;
-  late Widget HistoryPage;
+  late Widget WidgetStores;
   late Widget WidgetPantryPage;
   late Widget WidgetFavoritesPage;
+  // late Widget WidgetLoginPage;
 
   // TODO : change to get user pantry
-  List<String> userPantry = ['ingredein', 'hello', 'bue'];
+  List<String> userPantry = ['ingredients', 'recipes', 'stores'];
 
   void onPressed() {
     Navigator.of(context).pop();
@@ -35,7 +38,8 @@ class _HomePageState extends State<HomePage> {
     WidgetRecipePage = RecipePage(
       onPressed: onPressed,
     );
-    HistoryPage = StorePage();
+    WidgetStores = StorePage();
+    // WidgetLoginPage = LoginPage();
     WidgetPantryPage = PantryPage();
     WidgetFavoritesPage = FavoritesPage(
       onPressed: onPressed,
@@ -53,9 +57,10 @@ class _HomePageState extends State<HomePage> {
       ),
       body: <Widget>[
         WidgetRecipePage,
-        HistoryPage,
+        WidgetStores,
         WidgetPantryPage,
         WidgetFavoritesPage,
+        // WidgetLoginPage,
       ][currentPageIndex],
       drawer: Drawer(
         child: ListView(
@@ -74,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.house_outlined),
+              leading: const Icon(Icons.menu_book),
               title: const Text('Recipes'),
               onTap: () {
                 Navigator.pop(context);
@@ -84,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.explore),
+              leading: const Icon(Icons.store),
               title: const Text('Stores'),
               onTap: () {
                 Navigator.pop(context);
@@ -100,6 +105,16 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 setState(() {
                   currentPageIndex = 2;
+                });
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bookmark),
+              title: const Text('Favorites'),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  currentPageIndex = 3;
                 });
               },
             ),
@@ -135,7 +150,7 @@ class _HomePageState extends State<HomePage> {
           ),
           NavigationDestination(
             icon: Icon(Icons.favorite),
-            label: 'Favourites',
+            label: 'Favorites',
           ),
         ],
       ),
