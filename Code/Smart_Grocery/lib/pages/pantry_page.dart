@@ -91,94 +91,9 @@ class _PantryPageState extends State<PantryPage> {
             );
           },
         );
-<<<<<<< HEAD
-      },
-=======
-      }),
-    );
-  }
 
-  IngredientsAddPage() {
-    String newIngredient = "";
-    String quantity = "";
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Ingredient"),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Consumer<AppData>(builder: (contex, database, child) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: "Ingredient",
-                      contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)),
-                  autofocus: true,
-                  controller: tController,
-                  onChanged: (text) {
-                    newIngredient = text;
-                  },
-                ),
-                TextField(
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
-                  ],
-                  decoration: InputDecoration(
-                      labelText: "Quantity",
-                      contentPadding: EdgeInsets.only(left: 8.0, right: 8.0)),
-                  // autofocus: true,
-                  controller: tController2,
-                  onChanged: (text) {
-                    quantity = text;
-                    print('quantity on change "$quantity"');
-                  },
-                  onSubmitted: (text) {
-                    if (text.isNotEmpty) {
-                      database.AddIngredient(Ingredient(
-                          name: newIngredient,
-                          ingredient_id: -1,
-                          cost: 0.0,
-                          qty_available: double.parse(quantity)));
-                      tController.clear();
-                      tController2.clear();
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (newIngredient.isNotEmpty && quantity.isNotEmpty) {
-                        print(
-                            'adding "$newIngredient" with quantity "$quantity"');
-                        database.AddIngredient(Ingredient(
-                            name: newIngredient,
-                            ingredient_id: -1,
-                            cost: 0.0,
-                            qty_available: double.parse(quantity)));
-                      } else {
-                        print(
-                            'cannot add "$newIngredient" with quantity "$quantity"');
-                      }
-                      tController.clear();
-                      tController2.clear();
-                      Navigator.pop(context);
-                    },
-                    child: Text("Add"))
-              ],
-            );
-          }),
-        ),
-      ),
->>>>>>> 7a157df42cf1d2d7377bad6b6be88ca7f5319dc9
-    );
+  });
   }
 }
+
 
