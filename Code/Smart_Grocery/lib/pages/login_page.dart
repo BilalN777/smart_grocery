@@ -44,192 +44,320 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
+//   @override
+//   Widget build(BuildContext context) {
+//     return DefaultTabController(
+//       initialIndex: 0,
+//       length: 2,
+//       child: Scaffold(
+//         // resizeToAvoidBottomInset : false,
+//         appBar: AppBar(
+//           centerTitle: true,
+//           title: const Text('Smart Grocery'),
+//           bottom: const TabBar(tabs: <Widget>[
+//             Tab(
+//               icon: Icon(Icons.account_circle_rounded),
+//             ),
+//             Tab(
+//               icon: Icon(Icons.account_box_rounded),
+//             )
+//           ]),
+//         ),
+//         body: TabBarView(children: <Widget>[
+//           Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: Form(
+//               key: _formKey,
+//               child: Padding(
+//                 padding: const EdgeInsets.only(left: 50.0, right: 50),
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter username';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Username'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _password = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter password';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Password'),
+//                       obscureText: true,
+//                     ),
+//                     const SizedBox(height: 16),
+//                     ElevatedButton(
+//                       onPressed: _loginUser,
+//                       child: const Text('Login'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextButton(
+//                         onPressed: _guestLogin,
+//                         child: const Text('Continue as guest'))
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: Form(
+//               key: _formKey,
+//               child: Padding(
+//                 padding: const EdgeInsets.only(left: 30.0, right: 30),
+//                 child: ListView(
+//                   // mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter name';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Name'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter email';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Email'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter username';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Username'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _password = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter password';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(labelText: 'Password'),
+//                       obscureText: true,
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter  dietary restrictions and allergies.';
+//                         }
+//                         return null;
+//                       },
+//                       decoration: const InputDecoration(
+//                           labelText: 'Dietary restrictions and allergies.'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     TextFormField(
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _username = value;
+//                         });
+//                       },
+//                       validator: (value) {
+//                         if (value == null || value.isEmpty) {
+//                           return 'Please enter food preferences.';
+//                         }
+//                         return null;
+//                       },
+//                       decoration:
+//                           const InputDecoration(labelText: 'Food Preferences.'),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     ElevatedButton(
+//                       onPressed: _loginUser,
+//                       child: const Text('Sign up'),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ]),
+//       ),
+//     );
+//   }
+// }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
       child: Scaffold(
-        // resizeToAvoidBottomInset : false,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Smart Grocery'),
           bottom: const TabBar(tabs: <Widget>[
-            Tab(
-              icon: Icon(Icons.account_circle_rounded),
-            ),
-            Tab(
-              icon: Icon(Icons.account_box_rounded),
-            )
+            Tab(icon: Icon(Icons.account_circle_rounded)),
+            Tab(icon: Icon(Icons.account_box_rounded)),
           ]),
         ),
-        body: TabBarView(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 50.0, right: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter username';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Username'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _password = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _loginUser,
-                      child: const Text('Login'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextButton(
-                        onPressed: _guestLogin,
-                        child: const Text('Continue as guest'))
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30.0, right: 30),
-                child: ListView(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter name';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Name'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter email';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Email'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter username';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Username'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _password = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter  dietary restrictions and allergies.';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Dietary restrictions and allergies.'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _username = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter food preferences.';
-                        }
-                        return null;
-                      },
-                      decoration:
-                          const InputDecoration(labelText: 'Food Preferences.'),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _loginUser,
-                      child: const Text('Sign up'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ]),
+        body: TabBarView(
+          children: <Widget>[
+            loginTab(context),
+            signUpTab(context),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget loginTab(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Add your slogan text here
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Text(
+                  'Smart Grocery: \nYour Pantry\'s Best Friend',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              customTextFormField('Username', false),
+              const SizedBox(height: 16),
+              customTextFormField('Password', true),
+              const SizedBox(height: 16),
+              customButton(context, 'Login', _loginUser),
+              const SizedBox(height: 16),
+              customTextButton('Continue as guest', _guestLogin),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget signUpTab(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              customTextFormField('Name', false),
+              const SizedBox(height: 16),
+              customTextFormField('Email', false),
+              const SizedBox(height: 16),
+              customTextFormField('Username', false),
+              const SizedBox(height: 16),
+              customTextFormField('Password', true),
+              const SizedBox(height: 16),
+              customTextFormField('Dietary Restrictions and Allergies', false),
+              const SizedBox(height: 16),
+              customTextFormField('Food Preferences', false),
+              const SizedBox(height: 16),
+              customButton(context, 'Sign up', _loginUser),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget customTextFormField(String label, bool obscureText) {
+    return TextFormField(
+      onChanged: (value) {
+        // setState logic here
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter $label';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue, width: 2.0),
+        ),
+      ),
+      obscureText: obscureText,
+    );
+  }
+
+  Widget customButton(BuildContext context, String text, VoidCallback onPressed) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).primaryColor, // Button color
+        onPrimary: Colors.white, // Text color
+      ),
+      onPressed: onPressed,
+      child: Text(text),
+    );
+  }
+
+  Widget customTextButton(String text, VoidCallback onPressed) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Text(text),
     );
   }
 }
