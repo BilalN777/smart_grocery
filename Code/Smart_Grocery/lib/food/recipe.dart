@@ -45,7 +45,7 @@ class Recipe {
         ingredients: List<String>.from(json
             .decode(map['ingredients'])), // Decoding the JSON string to a List
         recipe_id: map['recipe_id'],
-        isFavorite: 0, //  TODO try changing to map ['isFavorite'] to see if it works
+        isFavorite: map['isFavorite'], //  TODO try changing to map ['isFavorite'] to see if it works
         image_name: map['image_name']);
   }
 
@@ -54,5 +54,15 @@ class Recipe {
         'ingredients: $ingredients, recipe_id: $recipe_id, '
         'Favorite: $isFavorite}'
         'image_name: $image_name\n';
+  }
+
+  factory Recipe.fromMap2(Map<String, dynamic> map) {
+    return Recipe(
+        Recipe_title: map['Recipe_title'],
+        instructions: map['instructions'] as List<String>, // Directly use as List<String>
+        ingredients: map['ingredients'] as List<String>, // Directly use as List<String>
+        recipe_id: map['recipe_id'],
+        isFavorite: map['isFavorite'] ?? 0,
+        image_name: map['image_name']);
   }
 }

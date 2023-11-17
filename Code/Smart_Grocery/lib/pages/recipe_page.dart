@@ -7,6 +7,7 @@ import 'package:smart_grocery/pages/recipe_details_page.dart';
 
 class RecipePage extends StatefulWidget {
   final void Function() onPressed;
+
   const RecipePage({super.key, required this.onPressed});
 
   @override
@@ -43,24 +44,32 @@ class _RecipePageState extends State<RecipePage> {
       return ListView.builder(
         itemCount: database.listOfRecipes.length,
         itemBuilder: (context, index) {
-          return RecipeTile(
-            // recipeName: database.listOfRecipes[index].Recipe_title,
-            // recipeImage: database.listOfRecipes[index].image_name,
-            recipe: database.listOfRecipes[index],
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return RecipeDetailPage(
-                  title: database.listOfRecipes[index].Recipe_title,
-                  instruction: database.listOfRecipes[index].instructions,
-                  ingredient: database.listOfRecipes[index].ingredients,
-                  recipeImage: database.listOfRecipes[index].image_name,
-                  onPressed: widget.onPressed,
-                );
-              }));
-            },
-            onPressed: () {
-              database.AddFavorites(true, index);
-            },
+          return Column(
+            children: [
+              RecipeTile(
+                // recipeName: database.listOfRecipes[index].Recipe_title,
+                // recipeImage: database.listOfRecipes[index].image_name,
+                recipe: database.listOfRecipes[index],
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return RecipeDetailPage(
+                      title: database.listOfRecipes[index].Recipe_title,
+                      instruction: database.listOfRecipes[index].instructions,
+                      ingredient: database.listOfRecipes[index].ingredients,
+                      recipeImage: database.listOfRecipes[index].image_name,
+                      onPressed: widget.onPressed,
+                    );
+                  }));
+                },
+                onPressed: () {
+                  database.AddFavorites(true, index);
+                },
+              ),
+              Divider(
+                thickness: 3,
+              ), // Add this line to insert a divider after each item
+            ],
           );
         },
       );
@@ -71,7 +80,9 @@ class _RecipePageState extends State<RecipePage> {
 class MySearchDelegate extends SearchDelegate {
   List<Recipe> recipes;
   List<Map<String, dynamic>> recipesResults = [];
+
   MySearchDelegate(this.recipes);
+
   static List<String> _previousSearchKeywords = [];
 
   List<Map<String, dynamic>> listOfMaps = [];
@@ -101,18 +112,21 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: Return a list view that contains all the recipes matching the result
-    // TODO: use the same class used to build the recommendation page which is a list
-    // TODO: of cards i.e. listview
-    if (!_previousSearchKeywords.contains(query))
-      _previousSearchKeywords.add(query);
+    doSearch();
+    if (recipesResults.isEmpty) {
+      // Display a message when no results are found
+      return Center(
+        child: Text(
+          'No results found',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      );
+    }
     return ListView.builder(
       itemCount: recipesResults.length,
       itemBuilder: (context, index) {
         return RecipeTile(
-          recipe: Recipe.fromMap(recipesResults[index]),
-          // recipeName: recipesResults[index]["Recipe_title"],
-          // recipeImage: recipesResults[index]["image_name"],
+          recipe: Recipe.fromMap2(recipesResults[index]),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return RecipeDetailPage(
@@ -156,13 +170,13 @@ class MySearchDelegate extends SearchDelegate {
   }
 
   void doSearch() {
-    for (var r in recipes) {
-      listOfMaps.add(r.toMap());
-    }
-
-    recipesResults = listOfMaps.where((map) {
-      String name = map['Recipe_title']?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
+    recipesResults.clear();
+    recipesResults = recipes
+        .where((recipe) {
+          String title = recipe.Recipe_title.toLowerCase();
+          return title.contains(query.toLowerCase());
+        })
+        .map((recipe) => recipe.toMap())
+        .toList();
   }
 }

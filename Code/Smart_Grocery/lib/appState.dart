@@ -24,7 +24,7 @@ class AppData extends ChangeNotifier {
     //   if (listOfRecipes[i].image_name == null)
     //     print('The image at index $i is null.');
     // }
-    print('Recipes for recipes page: ${listOfRecipes[7]}');
+    print('Recipes for recipes page: ${listOfRecipes.length}');
 
     // Load the ingredients from the database in to local variable
     listOfIngredients = await _dbHelper.getAllIngredients();
@@ -36,6 +36,8 @@ class AppData extends ChangeNotifier {
     notifyListeners();
     print('Stores for store page: ${listOfStores.length}');
   }
+
+
 
   ClearAllIngredients() {
     listOfIngredients = [];

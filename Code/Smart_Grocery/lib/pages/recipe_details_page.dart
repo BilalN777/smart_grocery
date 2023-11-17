@@ -61,6 +61,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
             ),
             ...List.generate(widget.instruction.length, (index) {
               return CheckboxListTile(
+                activeColor: Colors.green,
                 controlAffinity: ListTileControlAffinity.leading,
                 value: instructionChecked[index],
                 onChanged: (bool? newValue) {
@@ -78,6 +79,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
             ),
             ...List.generate(widget.ingredient.length, (index) {
               return CheckboxListTile(
+                activeColor: Colors.green,
                 controlAffinity: ListTileControlAffinity.leading,
                 value: ingredientChecked[index],
                 onChanged: (bool? newValue) {

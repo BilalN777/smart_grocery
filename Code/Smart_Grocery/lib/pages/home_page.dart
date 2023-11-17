@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:smart_grocery/pages/login_page.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
 import 'package:smart_grocery/pages/favorites_page.dart';
-import 'package:smart_grocery/pages/login_page.dart';
+import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   List<String> userPantry = ['ingredients', 'recipes', 'stores'];
 
   void onPressed() {
-    Navigator.of(context).pop();
+    Navigator.of(context as BuildContext).pop();
     setState(() {
       currentPageIndex = 1;
     });
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  late Future<List<Map<String, dynamic>>> listOfRecipies;
+  late Future<List<Map<String, dynamic>>> listOfRecipes;
 
   @override
   Widget build(BuildContext context) {
@@ -66,21 +67,39 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blueGrey,
+                color: Theme.of(context).colorScheme.primary,
               ),
-              child: Text(
-                'Smart Grocery',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    child: Icon(Icons.person, size: 50.0, color: Colors.blueGrey),
+                    backgroundColor: Colors.grey[300],
+                    radius: 40.0,
+                  ),
+                  SizedBox(height: 10), // Spacing between icon and text
+                  Text(
+                    "Guest User",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "noEmail@email.com",
+                    style: TextStyle(
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.menu_book),
-              title: const Text('Recipes'),
+              leading: const Icon(Icons.menu_book, color: Colors.red),
+              title: const Text('Recipes', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -89,8 +108,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.store),
-              title: const Text('Stores'),
+              leading: const Icon(Icons.store, color: Colors.green),
+              title: const Text('Stores', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -99,8 +118,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.shelves),
-              title: const Text('Pantry'),
+              leading: const Icon(Icons.shelves, color: Colors.brown,),
+              title: const Text('Pantry', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -109,8 +128,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.bookmark),
-              title: const Text('Favorites'),
+              leading: const Icon(Icons.bookmark, color: Colors.orange),
+              title: const Text('Favorites', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -120,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: const Text('Exit'),
+              title: const Text('Exit', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');
               },
@@ -128,32 +147,21 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) {
+      bottomNavigationBar: MotionTabBar(
+        labels: const ["Recipes", "Stores", "Pantry", "Favorites"],
+        initialSelectedTab: "Recipes",
+        tabBarColor: Theme.of(context).colorScheme.primary,
+        tabIconColor: Colors.grey,
+        tabSelectedColor: Theme.of(context).colorScheme.primary,
+        onTabItemSelected: (int value) {
           setState(() {
-            currentPageIndex = index;
+            currentPageIndex = value;
           });
         },
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Recipes',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.store_mall_directory),
-            label: 'Stores',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Pantry',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-        ],
+        icons: const [Icons.menu_book, Icons.store, Icons.shelves, Icons.bookmark],
+        textStyle: const TextStyle(color: Colors.white),
       ),
+
     );
   }
 }
