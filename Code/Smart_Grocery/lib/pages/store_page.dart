@@ -17,7 +17,7 @@ class _StorePageState extends State<StorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Stores"),
+        title: Text("Grocery Stores                   Near Chicago, IL"),
       ),
       body: getListOfStore(),
     );
@@ -33,24 +33,33 @@ class _StorePageState extends State<StorePage> {
         return ListView.builder(
             itemCount: database.listOfStores.length,
             itemBuilder: ((context, index) {
-              return StoreTile(
-                // storeName: database.listOfStores[index].name,
-                // address: database.listOfStores[index].address,
-                store: database.listOfStores[index],
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return StoreDetailsPage(
-                        onPressed: () => _launchMapsUrl(
-                            database.listOfStores[index].address),
-                        store: database.listOfStores[index]);
-                  }));
-                  // _launchMapsUrl(database.listOfStores[index].address);
-                },
+              return Column(
+                children: [
+                  StoreTile(
+                    // storeName: database.listOfStores[index].name,
+                    // address: database.listOfStores[index].address,
+                    store: database.listOfStores[index],
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return StoreDetailsPage(
+                            onPressed: () => _launchMapsUrl(
+                                database.listOfStores[index].address),
+                            store: database.listOfStores[index]);
+                      }));
+                      // _launchMapsUrl(database.listOfStores[index].address);
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+
+                  ), // Add this line to insert a divider after each item
+                ],
               );
             }));
       },
     );
+
   }
 }
 

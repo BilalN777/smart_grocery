@@ -19,7 +19,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("favorites"), actions: [
+      appBar: AppBar(title: Text("Favorites"), actions: [
         IconButton(
             onPressed: () {
               showSearch(
@@ -38,7 +38,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Consumer<AppData>(builder: (context, databsse, child) {
       if (databsse.listOffavoriteRecipe.isEmpty) {
         return Center(
-          child: Text("Click on the heart icon to add recipes to favorites"),
+          child: Text("No Favorites Found\n Add Favorites by clicking the heart icon on the Recipes page", textAlign: TextAlign.center,),
         );
       }
       return ListView.builder(

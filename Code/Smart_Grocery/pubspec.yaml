@@ -36,7 +36,12 @@ dependencies:
   path: ^1.8.3
   provider: ^6.0.5
   url_launcher: ^6.2.1
+  motion_tab_bar_v2: ^0.3.0
+  camera: ^0.10.5+5
+  permission_handler: ^11.0.1
+  qr_code_scanner: ^1.0.1
   google_fonts:
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -51,7 +56,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
-  adaptive_icon_foreground: "assets/logo_fore.png"
+  adaptive_icon_foreground: "assets/logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -77,6 +82,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/google_fonts/Bree_Serif/
+    - assets/
     - assets/data/
     - assets/data/Food_Images/
     - assets/data/grocery_store_icons/
