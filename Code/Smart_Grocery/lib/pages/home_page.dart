@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
   List<String> userPantry = ['ingredients', 'recipes', 'stores'];
 
   void onPressed() {
-    Navigator.of(context as BuildContext).pop();
     setState(() {
       currentPageIndex = 1;
     });
