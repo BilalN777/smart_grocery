@@ -46,6 +46,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to Scan ingredients into your pantr.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to your camera to Scan ingredients into your pantry.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
