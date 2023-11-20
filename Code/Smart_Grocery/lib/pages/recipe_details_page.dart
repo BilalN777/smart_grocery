@@ -40,7 +40,12 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(onPressed: widget.onPressed, icon: const Icon(Icons.store_sharp))
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onPressed();
+              },
+              icon: const Icon(Icons.store_sharp))
         ],
       ),
       body: Padding(
