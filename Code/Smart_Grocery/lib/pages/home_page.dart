@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
-import 'package:smart_grocery/pages/login_page.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
@@ -157,7 +155,7 @@ class _HomePageState extends State<HomePage> {
             currentPageIndex = value;
           });
         },
-        icons: const [Icons.menu_book, Icons.store, Icons.shelves, Icons.bookmark],
+        icons:  [Icons.menu_book, Icons.store, Icons.shelves, Icons.favorite],
         textStyle: const TextStyle(color: Colors.white),
       ),
 

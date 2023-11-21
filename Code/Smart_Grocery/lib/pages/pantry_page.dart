@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_grocery/appState.dart';
-import 'package:smart_grocery/food/ingredient.dart';
 import 'package:smart_grocery/models/ingredients_tile.dart';
 
 import 'package:smart_grocery/pages/ingredients_page.dart';

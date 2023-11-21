@@ -118,7 +118,7 @@ class MySearchDelegate extends SearchDelegate {
       return Center(
         child: Text(
           'No results found',
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       );
     }
