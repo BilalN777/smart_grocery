@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:smart_grocery/store/store.dart';
 
+import 'Cart_page.dart';
+
 
 class StoreDetailsPage extends StatelessWidget {
   final Store store;
   final Function() onPressed;
+  final List<String> cartItems = []; // List for cart items
 
-  const StoreDetailsPage({super.key, required this.onPressed, required this.store});
+  StoreDetailsPage({super.key, required this.onPressed, required this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +37,26 @@ class StoreDetailsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text(store.name),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartPage(cartItems: cartItems, store: store,)),
+            ),
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: ingredients.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Icon(Icons.food_bank_outlined, color: Colors.orangeAccent,), // Placeholder for ingredient icon
+            leading: Icon(Icons.food_bank_outlined, color: Colors.orangeAccent),
             title: Text(ingredients[index]),
             trailing: IconButton(
               icon: Icon(Icons.add_shopping_cart, color: Colors.teal),
               onPressed: () {
-                // Show SnackBar when added to cart
+                cartItems.add(ingredients[index]);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('${ingredients[index]} added to cart'),
@@ -58,9 +70,8 @@ class StoreDetailsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
-
         onPressed: onPressed,
-        child: Icon(Icons.directions ),
+        child: Icon(Icons.directions),
       ),
     );
   }
