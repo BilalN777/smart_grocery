@@ -4,6 +4,7 @@ class IngredientTile extends StatelessWidget {
   final String name;
   final double quantity;
   final void Function() deleteIngrident;
+
   IngredientTile(
       {super.key,
       required this.name,

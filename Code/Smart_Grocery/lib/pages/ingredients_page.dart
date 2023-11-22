@@ -12,7 +12,7 @@ class IngredientsAddPage extends StatefulWidget {
 class _IngredientsAddPageState extends State<IngredientsAddPage> {
   late TextEditingController tController;
   double quantity = 1.0; // State variable for the quantity
-
+  String selectedUnit = ''; // State variable for selected unit
   @override
   void initState() {
     super.initState();
@@ -60,6 +60,14 @@ class _IngredientsAddPageState extends State<IngredientsAddPage> {
                     });
                   },
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _unitButton('lbs'),
+                    _unitButton('oz'),
+                    _unitButton('pieces'),
+                  ],
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -84,4 +92,19 @@ class _IngredientsAddPageState extends State<IngredientsAddPage> {
       ),
     );
   }
+Widget _unitButton(String unit) {
+  return ElevatedButton(
+    onPressed: () {
+      setState(() {
+        selectedUnit = unit;
+      });
+    },
+    style: ElevatedButton.styleFrom(
+      foregroundColor: Colors.white,
+      backgroundColor: selectedUnit == unit ? Colors.deepPurple[300] : Colors.grey,
+    ),
+    child: Text(unit.toUpperCase()),
+  );
 }
+}
+

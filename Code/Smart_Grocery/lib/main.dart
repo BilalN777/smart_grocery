@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Smart Grocery',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: purple).copyWith(secondary: blue),

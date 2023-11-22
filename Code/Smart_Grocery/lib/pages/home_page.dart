@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_grocery/pages/pantry_page.dart';
 import 'package:smart_grocery/pages/recipe_page.dart';
+import 'package:smart_grocery/pages/recommendations_page.dart';
 import 'package:smart_grocery/pages/store_page.dart';
 import 'package:smart_grocery/pages/favorites_page.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   late Widget WidgetStores;
   late Widget WidgetPantryPage;
   late Widget WidgetFavoritesPage;
+  late Widget WidgetReccomendationsPage;
   // late Widget WidgetLoginPage;
 
   // TODO : change to get user pantry
@@ -42,6 +44,7 @@ class _HomePageState extends State<HomePage> {
     WidgetFavoritesPage = FavoritesPage(
       onPressed: onPressed,
     );
+    WidgetReccomendationsPage = RecommendationsPage();
   }
 
   late Future<List<Map<String, dynamic>>> listOfRecipes;
@@ -58,6 +61,7 @@ class _HomePageState extends State<HomePage> {
         WidgetStores,
         WidgetPantryPage,
         WidgetFavoritesPage,
+        WidgetReccomendationsPage
         // WidgetLoginPage,
       ][currentPageIndex],
       drawer: Drawer(
@@ -125,12 +129,22 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.bookmark, color: Colors.orange),
+              leading: const Icon(Icons.favorite, color: Colors.orange),
               title: const Text('Favorites', style: TextStyle(fontSize: 20.0)),
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
                   currentPageIndex = 3;
+                });
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.recommend_outlined, color: Colors.blue),
+              title: const Text('Recommendations', style: TextStyle(fontSize: 20.0)),
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  currentPageIndex = 4;
                 });
               },
             ),

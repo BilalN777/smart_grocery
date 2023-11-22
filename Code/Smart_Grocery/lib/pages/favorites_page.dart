@@ -38,7 +38,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return Consumer<AppData>(builder: (context, databsse, child) {
       if (databsse.listOffavoriteRecipe.isEmpty) {
         return Center(
-          child: Text("No Favorites Found\n Add Favorites by clicking the heart icon on the Recipes page", textAlign: TextAlign.center,),
+          child: Text("No Favorites Found\n Add Favorites by clicking the heart icon on the Recipes page",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
         );
       }
       return ListView.builder(
